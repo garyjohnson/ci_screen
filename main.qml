@@ -3,9 +3,10 @@ import QtQuick.Window 2.1
 
 Window {
 
-    Rectangle {
+    Loader {
         height: parent.height
         width: parent.width
-        color: 'red'
+
+        source: 'screens/status_screen.qml'
     }
 }

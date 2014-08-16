@@ -1,0 +1,4 @@
+requests
+xmltodict
+dependencies/PyPubSub-3.3.0.zip
+#PyQt5

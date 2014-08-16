@@ -1,4 +1,5 @@
 .venv
+ci_screen.cfg.private
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
