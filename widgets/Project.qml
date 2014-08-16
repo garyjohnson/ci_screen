@@ -2,25 +2,59 @@ import QtQuick 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 
-RowLayout {
+
+Item {
 
     id:root
+    property string projectName: ''
+    property string buildStatus: ''
 
-    property var model: undefined
+    Rectangle {
+        id: background
+        anchors.fill: parent
+    }
 
     Text {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        text: root.model.name
+        anchors.fill: parent
+        color: 'white'
+        font.bold: true
+        font.pointSize: 30
+        text: root.projectName
     }
-    Text {
-        Layout.preferredWidth: 300
-        Layout.fillHeight: true
-        text: root.model.lastBuildStatus
+
+    transform: Translate {
+        id: translate
+        x: -root.width 
     }
-    Text {
-        Layout.preferredWidth: 300
-        Layout.fillHeight: true
-        text: root.model.lastBuildTime
+
+    Component.onCompleted: {
+        intro.start()
+    }
+
+    states: [
+        State {
+            when: root.buildStatus == 'Success'
+            PropertyChanges { target: background; color: 'green' }
+        },
+        State {
+            when: root.buildStatus == 'Failure'
+            PropertyChanges { target: background; color: 'red' }
+        }
+    ]
+
+    SequentialAnimation {
+        id: intro
+        PauseAnimation {
+            duration: Math.floor(Math.random() * 400)
+        }
+        NumberAnimation { 
+            running: false
+            target: translate
+            property: 'x'
+            to: 0
+            duration: 1000
+            easing.type: Easing.OutBounce
+        }
     }
 }
+

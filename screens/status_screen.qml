@@ -9,17 +9,15 @@ StatusScreen {
     id:root
     anchors.fill: parent
 
-    ColumnLayout {
+    ListView {
         anchors.fill: parent
+        model: root.projects
 
-        Repeater {
-            model: root.projects
-
-            Project {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                model: modelData
-            }
+        delegate: Project {
+            height: 100
+            width: root.width
+            projectName: name
+            buildStatus: lastBuildStatus
         }
     }
 }

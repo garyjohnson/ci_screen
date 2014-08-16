@@ -43,6 +43,7 @@ class CIServerPoller(object):
                 try:
                     response = requests.get('{0}/cc.xml'.format(url), auth=auth)
                 except Exception as e:
+                    print e
                     error = e
 
                 responses.append(response)

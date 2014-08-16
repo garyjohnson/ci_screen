@@ -10,6 +10,7 @@ import model.project
 class StatusScreen(qt.QQuickItem):
 
     projects_changed = qt.pyqtSignal()
+    error_changed = qt.pyqtSignal()
     on_status_updated = qt.pyqtSignal(list, object)
 
     def __init__(self, *args, **kwargs):
@@ -17,16 +18,25 @@ class StatusScreen(qt.QQuickItem):
         self._projects = []
         sip.transferto(self, self.window())
 
-    @qt.pyqtProperty(qt.QQmlListProperty, notify=projects_changed)
-    def projects(self):
-        return qt.QQmlListProperty(model.project.Project, self, self._projects)
-
     def componentComplete(self):
         super(StatusScreen, self).componentComplete()
         self.on_status_updated.connect(self.on_status_update_on_ui_thread)
         pub.subscribe(self.on_status_update, "CI_UPDATE")
         self.poller = ci_poller.CIServerPoller()
         self.poller.start_polling_async()
+
+    @qt.pyqtProperty(qt.QQmlListProperty, notify=projects_changed)
+    def projects(self):
+        return qt.QQmlListProperty(model.project.Project, self, self._projects)
+
+    @qt.pyqtProperty(str, notify=error_changed)
+    def error(self):
+        return self._error
+
+    @error.setter
+    def error(self, value):
+        self._error
+        self.error_changed.emit()
 
     @qt.pyqtSlot(list, object)
     def on_status_update_on_ui_thread(self, responses, error):
