@@ -2,7 +2,7 @@
 
 import sys
 import screens.status_screen as status_screen
-import model.project
+import model
 
 import PyQt5.Qt as qt
 
@@ -14,6 +14,7 @@ if __name__ == '__main__':
 
     qt.qmlRegisterType(status_screen.StatusScreen, 'Screens', 1, 0, 'StatusScreen')
     qt.qmlRegisterType(model.project.Project, 'Model', 1, 0, 'Project')
+    qt.qmlRegisterType(model.projects_model.ProjectsModel, 'Model', 1, 0, 'ProjectsModel')
 
     component = qt.QQmlComponent(engine)
     component.loadUrl(qt.QUrl('main.qml'))

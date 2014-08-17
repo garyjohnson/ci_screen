@@ -6,6 +6,7 @@ import xmltodict
 import pprint
 import json
 import model.project
+import model.projects_model
 
 class StatusScreen(qt.QQuickItem):
 
@@ -15,8 +16,7 @@ class StatusScreen(qt.QQuickItem):
 
     def __init__(self, *args, **kwargs):
         super(StatusScreen, self).__init__(*args, **kwargs)
-        self._projects = []
-        sip.transferto(self, self.window())
+        self._projects = model.projects_model.ProjectsModel()
 
     def componentComplete(self):
         super(StatusScreen, self).componentComplete()
@@ -25,9 +25,14 @@ class StatusScreen(qt.QQuickItem):
         self.poller = ci_poller.CIServerPoller()
         self.poller.start_polling_async()
 
-    @qt.pyqtProperty(qt.QQmlListProperty, notify=projects_changed)
+    @qt.pyqtProperty(model.projects_model.ProjectsModel, notify=projects_changed)
     def projects(self):
-        return qt.QQmlListProperty(model.project.Project, self, self._projects)
+        return self._projects
+
+    @projects.setter
+    def projects(self, value):
+        self._projects = value
+        self.projects_changed.emit()
 
     @qt.pyqtProperty(str, notify=error_changed)
     def error(self):
@@ -38,23 +43,37 @@ class StatusScreen(qt.QQuickItem):
         self._error
         self.error_changed.emit()
 
-    @qt.pyqtSlot(list, object)
-    def on_status_update_on_ui_thread(self, responses, error):
-        del self._projects[:]
+    def get_projects_from_responses(self, responses):
+        projects = []
         for response in responses:
             statuses = xmltodict.parse(response.text)
-            response_projects = statuses.get('Projects').get('Project')
-            for response_project in response_projects:
+            for response_project in statuses.get('Projects').get('Project'):
                 name = response_project.get('@name')
                 activity = response_project.get('@activity')
                 last_build_status = response_project.get('@lastBuildStatus')
                 last_build_time = response_project.get('@lastBuildTime')
-                project = model.project.Project(name, activity, last_build_status, last_build_time)
-                sip.transferto(project, self.window())
-                self._projects.append(project)
 
-        self.projects_changed.emit()
+                project = model.project.Project(name, activity, last_build_status, last_build_time)
+                projects.append(project)
+        return projects
+
+    @qt.pyqtSlot(list, object)
+    def on_status_update_on_ui_thread(self, responses, error):
+
+        all_projects = self.get_projects_from_responses(responses)
+        response_names = [project.name for project in all_projects]
+        removed_projects = [project for project in self.projects.projects if project.name not in response_names]
+        for removed_project in removed_projects:
+            self.projects.remove(removed_project)
+
+        for project in all_projects:
+            matching_project = next((p for p in self.projects.projects if p.name == project.name), None)
+            if matching_project is None: 
+                self.projects.append(project)
+            else:
+                self.projects.update(matching_project, project.lastBuildStatus)
 
     def on_status_update(self, responses, error):
         self.on_status_updated.emit(responses, error)
+
 

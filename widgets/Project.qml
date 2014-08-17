@@ -7,54 +7,79 @@ Item {
 
     id:root
     property string projectName: ''
-    property string buildStatus: ''
+    property string buildStatus: 'Unknown'
+    property string lastBuild: ''
 
     Rectangle {
         id: background
         anchors.fill: parent
     }
 
+    Rectangle {
+        id: accent
+        height: 5
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+    }
+
     Text {
-        anchors.fill: parent
+        id: label
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.leftMargin: 25
+        anchors.topMargin: 5
         color: 'white'
         font.bold: true
         font.pointSize: 30
         text: root.projectName
+        verticalAlignment: Text.AlignVCenter
     }
 
-    transform: Translate {
-        id: translate
-        x: -root.width 
+    Text {
+        id: last_build_label
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.rightMargin: 50
+        anchors.topMargin: 5
+        color: 'white'
+        font.bold: true
+        font.pointSize: 30
+        text: root.lastBuild
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignRight
     }
 
-    Component.onCompleted: {
-        intro.start()
-    }
-
+    state: buildStatus
     states: [
         State {
-            when: root.buildStatus == 'Success'
-            PropertyChanges { target: background; color: 'green' }
+            name: 'Success'
+            PropertyChanges { target: background; color: '#7A8C89' }
+            PropertyChanges { target: accent; color: '#909D9E' }
+            PropertyChanges { target: label; color: '#1F2525' }
+            PropertyChanges { target: last_build_label; color: '#1F2525'; visible: false }
         },
         State {
-            when: root.buildStatus == 'Failure'
-            PropertyChanges { target: background; color: 'red' }
+            name: 'Failure'
+            PropertyChanges { target: background; color: '#FF0D51' }
+            PropertyChanges { target: accent; color: '#d42043' }
+            PropertyChanges { target: label; color: 'white' }
+            PropertyChanges { target: last_build_label; color: 'white' }
+        },
+        State {
+            name: 'Exception'
+            PropertyChanges { target: background; color: '#FF0D51' }
+            PropertyChanges { target: accent; color: '#d42043' }
+            PropertyChanges { target: label; color: 'white' }
+            PropertyChanges { target: last_build_label; color: 'white' }
+        },
+        State {
+            name: 'Unknown'
+            PropertyChanges { target: background; color: '#909D9E' }
+            PropertyChanges { target: accent; color: '#7A8C89' }
+            PropertyChanges { target: label; color: '#1F2525' }
+            PropertyChanges { target: last_build_label; color: '#1F2525' }
         }
     ]
-
-    SequentialAnimation {
-        id: intro
-        PauseAnimation {
-            duration: Math.floor(Math.random() * 400)
-        }
-        NumberAnimation { 
-            running: false
-            target: translate
-            property: 'x'
-            to: 0
-            duration: 1000
-            easing.type: Easing.OutBounce
-        }
-    }
 }
 

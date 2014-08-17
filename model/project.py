@@ -1,4 +1,7 @@
+import pytz
+import datetime
 import PyQt5.Qt as qt
+import dateutil.parser as date_parser
 
 class Project(qt.QObject):
 
@@ -6,6 +9,7 @@ class Project(qt.QObject):
     activity_changed=qt.pyqtSignal()
     last_build_status_changed=qt.pyqtSignal()
     last_build_time_changed=qt.pyqtSignal()
+    last_build_label_changed=qt.pyqtSignal()
 
     def __init__(self, name, activity, last_build_status, last_build_time):
         super(Project, self).__init__()
@@ -13,6 +17,8 @@ class Project(qt.QObject):
         self._activity = activity
         self._last_build_status = last_build_status
         self._last_build_time = last_build_time
+        self._last_build_label = ''
+        self.update_last_build_label()
     
     @qt.pyqtProperty(str, notify=name_changed)
     def name(self):
@@ -49,3 +55,29 @@ class Project(qt.QObject):
     def lastBuildTime(self, value):
         self._last_build_time = value
         self.last_build_time_changed.emit()
+        self.update_last_build_label()
+
+    @qt.pyqtProperty(str, notify=last_build_label_changed)
+    def lastBuildLabel(self):
+        return self._last_build_label
+
+    @lastBuildLabel.setter
+    def lastBuildLabel(self, value):
+        self._last_build_label = value
+        self.last_build_label_changed.emit()
+
+    def update_last_build_label(self):
+        last_build_datetime = date_parser.parse(self._last_build_time).replace(tzinfo = pytz.utc)
+        now = datetime.datetime.utcnow().replace(tzinfo = pytz.utc)
+
+        built_ago = last_build_datetime - now
+        minutes_ago = abs(int(built_ago.total_seconds())) / 60
+        hours_ago = minutes_ago / 60
+        days_ago = hours_ago / 24
+
+        if days_ago > 0:
+            self.lastBuildLabel = "{num} day{s} ago".format(num=days_ago, s='s' if days_ago > 1 else '' )
+        elif hours_ago > 0:
+            self.lastBuildLabel = "{num} hour{s} ago".format(num=hours_ago, s='s' if hours_ago > 1 else '')
+        else:
+            self.lastBuildLabel = "{num} minute{s} ago".format(num=minutes_ago, s='s' if minutes_ago > 1 else '')
