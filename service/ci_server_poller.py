@@ -39,7 +39,6 @@ class CIServerPoller(object):
                 auth = None
                 if username is not None and token is not None:
                     auth = requests.auth.HTTPBasicAuth(username, token)
-
                 try:
                     response = requests.get('{0}/cc.xml'.format(url), auth=auth)
                 except Exception as e:
