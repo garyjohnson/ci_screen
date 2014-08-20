@@ -61,15 +61,6 @@ class StatusScreen(qt.QQuickItem):
     @qt.pyqtSlot(list, object)
     def on_status_update_on_ui_thread(self, responses, error):
         all_projects = self.get_projects_from_responses(responses)
-
-        for r_proj in self.projects.projects:
-            self.projects.remove(r_proj)
-
-        for a_proj in all_projects:
-            self.projects.append(a_proj)
-
-        return
-
         response_names = [project.name for project in all_projects]
         removed_projects = [project for project in self.projects.projects if project.name not in response_names]
         for removed_project in removed_projects:
