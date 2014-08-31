@@ -46,11 +46,22 @@ StatusScreen {
             Layout.fillWidth: true
 
             ListView {
+                id: listview
 
                 anchors.fill: parent
                 anchors.topMargin: 25
                 anchors.leftMargin: 25
                 model: root.projects
+
+                interactive: false
+
+                highlightRangeMode: ListView.StrictlyEnforceRange
+                highlightMoveVelocity: 3200
+                snapMode: ListView.SnapToItem
+                flickableDirection: Flickable.VerticalFlick
+                flickDeceleration: 800
+                maximumFlickVelocity: 9000
+                keyNavigationWraps: true
 
                 spacing: 20
 
@@ -90,6 +101,27 @@ StatusScreen {
 
                 displaced: Transition {
                     NumberAnimation { property: 'x,y'; duration: 500; easing.type: Easing.InOutQuad }
+                }
+            }
+        }
+    }
+
+    SequentialAnimation {
+        id: marqueeAnimation
+        running: true
+        loops: Animation.Infinite
+
+        PauseAnimation { duration: 5000 }
+        ScriptAction { script: {
+                var itemsPerPage = Math.floor(listview.height / 95)
+                var itemsToScroll = itemsPerPage
+                var desiredIndex = listview.currentIndex + itemsPerPage
+                if (desiredIndex > listview.count - 1) {
+                    itemsToScroll = Math.floor(listview.count % itemsPerPage)
+                } 
+
+                for (var i = 0; i < itemsToScroll; i++) {
+                    listview.incrementCurrentIndex()
                 }
             }
         }
