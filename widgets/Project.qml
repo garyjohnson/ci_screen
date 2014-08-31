@@ -37,32 +37,36 @@ Item {
         anchors.right: parent.right
     }
 
-    Text {
-        id: label
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.leftMargin: 25
-        anchors.topMargin: 5
-        color: 'white'
-        font.family: 'Open Sans'
-        font.pointSize: 30
-        text: root.projectName
-        verticalAlignment: Text.AlignVCenter
-    }
+    RowLayout {
 
-    Text {
-        id: lastBuildLabel
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.fill: parent
+        anchors.leftMargin: 25
         anchors.rightMargin: 50
         anchors.topMargin: 5
-        color: 'white'
-        font.family: 'Open Sans'
-        font.bold: true
-        font.pointSize: 30
-        text: root.lastBuild
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignRight
+
+        spacing: 50
+
+        Text {
+            id: label
+            Layout.fillWidth: true
+            color: 'white'
+            font.family: 'Open Sans'
+            font.pointSize: 30
+            text: root.projectName
+            elide: Text.ElideRight
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        Text {
+            id: lastBuildLabel
+            color: 'white'
+            font.family: 'Open Sans'
+            font.bold: true
+            font.pointSize: 30
+            text: root.lastBuild
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignRight
+        }
     }
 
     state: buildStatus
