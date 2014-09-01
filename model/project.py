@@ -66,6 +66,9 @@ class Project(qt.QObject):
         self._last_build_label = value
         self.last_build_label_changed.emit()
 
+    def is_failed(self):
+        return self.lastBuildStatus == 'Failure' or self.lastBuildStatus == 'Exception'
+
     def update_last_build_label(self):
         last_build_datetime = date_parser.parse(self._last_build_time).replace(tzinfo = pytz.utc)
         now = datetime.datetime.utcnow().replace(tzinfo = pytz.utc)

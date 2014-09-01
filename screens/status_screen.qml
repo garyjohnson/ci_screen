@@ -46,6 +46,30 @@ StatusScreen {
         }
 
         Item {
+            Layout.preferredHeight: (root.itemHeight + root.itemSpacing) * failedList.count
+            Layout.fillWidth: true
+
+            ListView {
+                id: failedList
+
+                anchors.fill: parent
+                anchors.topMargin: 25
+                anchors.leftMargin: 25
+
+                interactive: false
+                spacing: root.itemSpacing
+
+                model: root.failed_projects
+                delegate: projectTemplate
+
+                populate: populateTransition
+                add: addTransition
+                remove: removeTransition
+                displaced: displacedTransition
+            }
+        }
+
+        Item {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
@@ -55,7 +79,6 @@ StatusScreen {
                 anchors.fill: parent
                 anchors.topMargin: 25
                 anchors.leftMargin: 25
-                model: root.projects
 
                 interactive: false
 
@@ -69,45 +92,58 @@ StatusScreen {
 
                 spacing: root.itemSpacing
 
-                delegate: Project {
-                    height: root.itemHeight
-                    width: root.width
-                    projectName: name
-                    buildStatus: lastBuildStatus
-                    lastBuild: lastBuildLabel
-                }
+                model: root.projects
+                delegate: projectTemplate
 
-                populate: Transition {
-                    id: populateTransition
-                    SequentialAnimation {
-                        NumberAnimation { property: 'x'; to: root.width; duration: 0 }
-                        PauseAnimation { duration: (Math.random() * 500) + (populateTransition.ViewTransition.index * 0) }
-                        NumberAnimation { property: 'x'; from: root.width; to: 0; duration: 700; easing.type: Easing.InOutQuad }
-                    }
-                }
-
-                add: Transition {
-                    id: addTransition
-                    SequentialAnimation {
-                        NumberAnimation { property: 'x'; to: root.width; duration: 0 }
-                        PauseAnimation { duration: (Math.random() * 1000) + (addTransition.ViewTransition.index * 0) }
-                        NumberAnimation { property: 'x'; from: root.width; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                    }
-                }
-
-                remove: Transition {
-                    SequentialAnimation {
-                        PropertyAction { property: 'ListView.delayRemove'; value: true }
-                        NumberAnimation { property: 'x'; from: 0; to: root.width; duration: 500; easing.type: Easing.InOutQuad }
-                        PropertyAction { property: 'ListView.delayRemove'; value: false }
-                    }
-                }
-
-                displaced: Transition {
-                    NumberAnimation { property: 'x,y'; duration: 500; easing.type: Easing.InOutQuad }
-                }
+                populate: populateTransition
+                add: addTransition
+                remove: removeTransition
+                displaced: displacedTransition
             }
         }
+    }
+
+    Component {
+        id: projectTemplate
+        Project {
+            height: root.itemHeight
+            width: root.width
+            projectName: name
+            buildStatus: lastBuildStatus
+            lastBuild: lastBuildLabel
+        }
+    }
+
+    Transition {
+        id: populateTransition
+        SequentialAnimation {
+            NumberAnimation { property: 'x'; to: root.width; duration: 0 }
+            PauseAnimation { duration: (Math.random() * 500) + (populateTransition.ViewTransition.index * 0) }
+            NumberAnimation { property: 'x'; from: root.width; to: 0; duration: 700; easing.type: Easing.InOutQuad }
+        }
+    }
+
+    Transition {
+        id: addTransition
+        SequentialAnimation {
+            NumberAnimation { property: 'x'; to: root.width; duration: 0 }
+            PauseAnimation { duration: (Math.random() * 1000) + (addTransition.ViewTransition.index * 0) }
+            NumberAnimation { property: 'x'; from: root.width; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+        }
+    }
+
+    Transition {
+        id: removeTransition
+        SequentialAnimation {
+            PropertyAction { property: 'ListView.delayRemove'; value: true }
+            NumberAnimation { property: 'x'; from: 0; to: root.width; duration: 500; easing.type: Easing.InOutQuad }
+            PropertyAction { property: 'ListView.delayRemove'; value: false }
+        }
+    }
+
+    Transition {
+        id: displacedTransition
+        NumberAnimation { property: 'x,y'; duration: 500; easing.type: Easing.InOutQuad }
     }
 
     SequentialAnimation {

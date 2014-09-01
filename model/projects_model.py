@@ -7,9 +7,9 @@ class ProjectsModel(qt.QAbstractListModel):
     LAST_BUILD_LABEL_ROLE = qt.Qt.UserRole + 3
     parent_index = qt.QModelIndex()
 
-    def __init__(self, projects = []):
+    def __init__(self):
         super(ProjectsModel, self).__init__()
-        self.projects = projects
+        self.projects = []
 
     def append(self, project):
         self.beginInsertRows(qt.QModelIndex(), len(self.projects), len(self.projects))

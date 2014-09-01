@@ -1,22 +1,27 @@
-import PyQt5.Qt as qt
-import sip
-import service.ci_server_poller as ci_poller
-import pubsub.pub as pub
-import xmltodict
-import pprint
 import json
+import pprint
+
+import sip
+import PyQt5.Qt as qt
+import xmltodict
+import pubsub.pub as pub
+
 import model.project
 import model.projects_model
+import service.ci_server_poller as ci_poller
+
 
 class StatusScreen(qt.QQuickItem):
 
     projects_changed = qt.pyqtSignal()
+    failed_projects_changed = qt.pyqtSignal()
     error_changed = qt.pyqtSignal()
     on_status_updated = qt.pyqtSignal(list, object)
 
     def __init__(self, *args, **kwargs):
         super(StatusScreen, self).__init__(*args, **kwargs)
         self._projects = model.projects_model.ProjectsModel()
+        self._failed_projects = model.projects_model.ProjectsModel()
         self._error = None
 
     def componentComplete(self):
@@ -34,6 +39,15 @@ class StatusScreen(qt.QQuickItem):
     def projects(self, value):
         self._projects = value
         self.projects_changed.emit()
+
+    @qt.pyqtProperty(model.projects_model.ProjectsModel, notify=failed_projects_changed)
+    def failed_projects(self):
+        return self._failed_projects
+
+    @failed_projects.setter
+    def failed_projects(self, value):
+        self._failed_projects = value
+        self.failed_projects_changed.emit()
 
     @qt.pyqtProperty(str, notify=error_changed)
     def error(self):
@@ -68,10 +82,21 @@ class StatusScreen(qt.QQuickItem):
 
         for project in all_projects:
             matching_project = next((p for p in self.projects.projects if p.name == project.name), None)
-            if matching_project is None: 
+            if matching_project is None and not project.is_failed():
                 self.projects.append(project)
-            else:
+            elif matching_project is not None and project.is_failed():
+                self.projects.remove(project)
+            elif matching_project is not None:
                 self.projects.update(matching_project, project.lastBuildStatus)
+
+        for project in all_projects:
+            matching_project = next((p for p in self.failed_projects.projects if p.name == project.name), None)
+            if matching_project is None and project.is_failed():
+                self.failed_projects.append(project)
+            elif matching_project is not None and not project.is_failed():
+                self.failed_projects.remove(project)
+            elif matching_project is not None:
+                self.failed_projects.update(matching_project, project.lastBuildStatus)
 
     def on_status_update(self, responses, error):
         self.on_status_updated.emit(responses, error)
