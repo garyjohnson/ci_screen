@@ -8,6 +8,10 @@ import '../widgets'
 StatusScreen {
 
     id:root
+
+    property real itemHeight: 75
+    property real itemSpacing: 20
+
     anchors.fill: parent
 
     Rectangle {
@@ -63,10 +67,10 @@ StatusScreen {
                 maximumFlickVelocity: 9000
                 keyNavigationWraps: true
 
-                spacing: 20
+                spacing: root.itemSpacing
 
                 delegate: Project {
-                    height: 75
+                    height: root.itemHeight
                     width: root.width
                     projectName: name
                     buildStatus: lastBuildStatus
@@ -113,7 +117,7 @@ StatusScreen {
 
         PauseAnimation { duration: 5000 }
         ScriptAction { script: {
-                var itemsPerPage = Math.floor(listview.height / 95)
+                var itemsPerPage = Math.floor(listview.height / (root.itemHeight + root.itemSpacing))
                 var itemsToScroll = itemsPerPage
                 var desiredIndex = listview.currentIndex + itemsPerPage
                 if (desiredIndex > listview.count - 1) {
