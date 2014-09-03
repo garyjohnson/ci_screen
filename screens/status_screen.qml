@@ -24,13 +24,14 @@ StatusScreen {
         anchors.fill: parent
 
         Item {
+            z: 1
+
             Layout.preferredHeight: headerImage.height + 20
             Layout.fillWidth: true
-            z: 1
 
             Rectangle {
                 anchors.fill: parent
-                color: '#909D9E'
+                color: '#CCCCCC'
             }
 
             Image { 
@@ -46,8 +47,15 @@ StatusScreen {
         }
 
         Item {
+            z: 2
+
             Layout.preferredHeight: (root.itemHeight + root.itemSpacing) * failedList.count
             Layout.fillWidth: true
+
+            Rectangle {
+                anchors.fill: parent
+                color: '#1F2525'
+            }
 
             ListView {
                 id: failedList
@@ -119,7 +127,7 @@ StatusScreen {
         SequentialAnimation {
             NumberAnimation { property: 'x'; to: root.width; duration: 0 }
             PauseAnimation { duration: (Math.random() * 500) + (populateTransition.ViewTransition.index * 0) }
-            NumberAnimation { property: 'x'; from: root.width; to: 0; duration: 700; easing.type: Easing.InOutQuad }
+            NumberAnimation { property: 'x'; from: root.width; to: 0; duration: 300; easing.type: Easing.InOutQuad }
         }
     }
 
@@ -128,7 +136,7 @@ StatusScreen {
         SequentialAnimation {
             NumberAnimation { property: 'x'; to: root.width; duration: 0 }
             PauseAnimation { duration: (Math.random() * 1000) + (addTransition.ViewTransition.index * 0) }
-            NumberAnimation { property: 'x'; from: root.width; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+            NumberAnimation { property: 'x'; from: root.width; to: 0; duration: 300; easing.type: Easing.InOutQuad }
         }
     }
 
@@ -136,14 +144,14 @@ StatusScreen {
         id: removeTransition
         SequentialAnimation {
             PropertyAction { property: 'ListView.delayRemove'; value: true }
-            NumberAnimation { property: 'x'; from: 0; to: root.width; duration: 500; easing.type: Easing.InOutQuad }
+            NumberAnimation { property: 'x'; from: 0; to: root.width; duration: 300; easing.type: Easing.InOutQuad }
             PropertyAction { property: 'ListView.delayRemove'; value: false }
         }
     }
 
     Transition {
         id: displacedTransition
-        NumberAnimation { property: 'x,y'; duration: 500; easing.type: Easing.InOutQuad }
+        NumberAnimation { property: 'x,y'; duration: 300; easing.type: Easing.InOutQuad }
     }
 
     SequentialAnimation {

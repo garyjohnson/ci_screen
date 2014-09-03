@@ -74,31 +74,23 @@ class StatusScreen(qt.QQuickItem):
 
     @qt.pyqtSlot(list, object)
     def on_status_update_on_ui_thread(self, responses, error):
-        all_projects = self.get_projects_from_responses(responses)
-        response_names = [project.name for project in all_projects]
-        removed_projects = [project for project in self.projects.projects if project.name not in response_names]
-        for removed_project in removed_projects:
-            self.projects.remove(removed_project)
+        new_projects = [p for p in self.get_projects_from_responses(responses) if p.lastBuildStatus != 'Unknown']
 
-        for project in all_projects:
-            matching_project = next((p for p in self.projects.projects if p.name == project.name), None)
-            if matching_project is None and not project.is_failed():
-                self.projects.append(project)
-            elif matching_project is not None and project.is_failed():
-                self.projects.remove(project)
-            elif matching_project is not None:
-                self.projects.update(matching_project, project.lastBuildStatus)
-
-        for project in all_projects:
-            matching_project = next((p for p in self.failed_projects.projects if p.name == project.name), None)
-            if matching_project is None and project.is_failed():
-                self.failed_projects.append(project)
-            elif matching_project is not None and not project.is_failed():
-                self.failed_projects.remove(project)
-            elif matching_project is not None:
-                self.failed_projects.update(matching_project, project.lastBuildStatus)
+        self._synchronize_projects(self.projects, [p for p in new_projects if not p.is_failed()])
+        self._synchronize_projects(self.failed_projects, [p for p in new_projects if p.is_failed()])
 
     def on_status_update(self, responses, error):
         self.on_status_updated.emit(responses, error)
 
+    def _synchronize_projects(self, projects_model, new_projects):
+        new_project_names = [p.name for p in new_projects]
+        old_project_names = [p.name for p in projects_model.projects]
 
+        for removed_project in [p for p in projects_model.projects if p.name not in new_project_names]:
+            projects_model.remove(removed_project)
+
+        for added_project in [p for p in new_projects if p.name not in old_project_names]:
+            projects_model.append(added_project)
+
+        for updated_project in [p for p in new_projects if p.name in old_project_names]:
+            projects_model.update(updated_project)

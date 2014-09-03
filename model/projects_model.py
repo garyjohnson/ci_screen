@@ -21,10 +21,15 @@ class ProjectsModel(qt.QAbstractListModel):
         self.projects.remove(project)
         self.endRemoveRows()
 
-    def update(self, project, last_build_status):
-        project.lastBuildStatus = last_build_status
-        data_position = self.createIndex(self.projects.index(project), 0, project)
-        self.dataChanged.emit(data_position, data_position)
+    def update(self, updated_project):
+        project_to_update = next((p for p in self.projects if p.name == updated_project.name), None)
+        if project_to_update is not None:
+            project_to_update.lastBuildLabel = updated_project.lastBuildLabel
+            project_to_update.lastBuildTime = updated_project.lastBuildTime
+            project_to_update.lastBuildStatus = updated_project.lastBuildStatus
+            project_to_update.activity = updated_project.activity
+            data_position = self.createIndex(self.projects.index(project_to_update), 0, project_to_update)
+            self.dataChanged.emit(data_position, data_position)
 
     def roleNames(self):
         roles = {}
