@@ -5,9 +5,13 @@ import screens.status_screen as status_screen
 import model
 
 import PyQt5.Qt as qt
+import pqaut.server as pqaut
 
 
 if __name__ == '__main__':
+
+    if '--automation_server' in sys.argv:
+        pqaut.start_automation_server()
 
     app = qt.QApplication(sys.argv)
 
