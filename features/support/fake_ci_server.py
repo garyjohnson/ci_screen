@@ -25,7 +25,7 @@ class FakeCIServer(object):
         self._projects.append(project)
 
     def start(self):
-        self.thread = threading.Thread(target=self._app.run, kwargs={'host':self._host, 'port':self._port})
+        self.thread = threading.Thread(target=self._app.run, kwargs={'host':self._host, 'port':self._port, 'quiet':True, 'debug':False})
         self.thread.setDaemon(True)
         self.thread.start()
 
