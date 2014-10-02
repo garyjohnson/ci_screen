@@ -5,8 +5,7 @@ Window {
     id: root
 
     Loader {
-        height: root.height
-        width: root.width
+        anchors.fill: parent
         source: 'screens/status_screen.qml'
     }
 

@@ -9,11 +9,8 @@ import features.support.fake_ci_server as ci
 
 @step(u'the CI server has projects:$')
 def the_ci_server_has_projects(step):
-    world.fake_ci_server = ci.FakeCIServer(port=1234)
     for project in step.hashes:
-        world.fake_ci_server.add_project(project)
-
-    world.fake_ci_server.start()
+        world.fake_ci_server.projects.append(project)
 
     config_helper.build_config({'ci_servers':{'sections':'test'}, 'test':{'url':'http://localhost:1234'}})
 
@@ -25,3 +22,13 @@ def the_app_is_running(step):
 def i_see_projects(step, projects):
     for project in projects.split(", "):
         pqaut.assert_is_visible(project)
+
+@step(u'I see successful projects "([^"]*)"')
+def i_see_successful_projects(step, projects):
+    for project in projects.split(", "):
+        pqaut.assert_is_visible(project, 'successful_project')
+
+@step(u'I see failed projects "([^"]*)"')
+def i_see_failed_projects(step, projects):
+    for project in projects.split(", "):
+        pqaut.assert_is_visible(project, 'failed_project')

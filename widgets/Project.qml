@@ -6,6 +6,9 @@ import QtQuick.Layouts 1.1
 Item {
 
     id:root
+    property string automation_type: 'successful_project'
+    property string automation_id: projectName
+
     property string projectName: ''
     property string buildStatus: 'Unknown'
     property string lastBuild: ''
@@ -78,27 +81,8 @@ Item {
             PropertyChanges { target: label; color: '#1F2525'; font.bold: false }
             PropertyChanges { target: lastBuildLabel; color: '#1F2525'; visible: false }
             PropertyChanges { target: failAnimation; running: false }
+            PropertyChanges { target: root; automation_type: 'successful_project' }
         },
-        /*
-        State {
-            name: 'Success'
-            PropertyChanges { target: background; color: '#94c093' }
-            PropertyChanges { target: accent; color: '#688868' }
-            PropertyChanges { target: label; color: '#1F2525'; font.bold: false }
-            PropertyChanges { target: lastBuildLabel; color: '#1F2525'; visible: false }
-            PropertyChanges { target: failAnimation; running: false }
-        },
-        */
-        /*
-        State {
-            name: 'Success'
-            PropertyChanges { target: background; color: '#7A8C89' }
-            PropertyChanges { target: accent; color: '#909D9E' }
-            PropertyChanges { target: label; color: '#1F2525'; font.bold: false }
-            PropertyChanges { target: lastBuildLabel; color: '#1F2525'; visible: false }
-            PropertyChanges { target: failAnimation; running: false }
-        },
-        */
         State {
             name: 'Failure'
             PropertyChanges { target: background; color: '#FF0D51' }
@@ -106,6 +90,7 @@ Item {
             PropertyChanges { target: label; color: 'white'; font.bold: true }
             PropertyChanges { target: lastBuildLabel; color: 'white' }
             PropertyChanges { target: failAnimation; running: true }
+            PropertyChanges { target: root; automation_type: 'failed_project' }
         },
         State {
             name: 'Exception'
@@ -114,6 +99,7 @@ Item {
             PropertyChanges { target: label; color: 'white'; font.bold: true }
             PropertyChanges { target: lastBuildLabel; color: 'white' }
             PropertyChanges { target: failAnimation; running: true }
+            PropertyChanges { target: root; automation_type: 'failed_project' }
         },
         State {
             name: 'Unknown'
@@ -122,6 +108,7 @@ Item {
             PropertyChanges { target: label; color: '#1F2525'; font.bold: false }
             PropertyChanges { target: lastBuildLabel; color: '#1F2525' }
             PropertyChanges { target: failAnimation; running: false }
+            PropertyChanges { target: root; automation_type: 'unknown_project' }
         }
     ]
 }
