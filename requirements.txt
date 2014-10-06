@@ -3,12 +3,13 @@ requests
 xmltodict
 python-dateutil
 dependencies/PyPubSub-3.3.0.zip
+
 #PyQt5
 #sip
 
 #testing
 -e git+https://github.com/gabrielfalcao/lettuce.git@d757885b50fe8fa9e06a734f168731afb4095e6c#egg=lettuce
-pqaut
+pqaut==0.1.6
 nose
 bottle
 

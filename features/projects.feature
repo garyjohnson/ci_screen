@@ -19,3 +19,5 @@ Feature: Projects
     And the app is running
     Then I see successful projects "My Project"
     And I see failed projects "My Other Project"
+    And I do not see failed projects "My Project"
+    And I do not see successful projects "My Other Project"
