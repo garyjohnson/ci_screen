@@ -25,10 +25,6 @@ def the_ci_server_has_projects(step):
 
     config_helper.build_config(config)
 
-@step(u'the app is running$')
-def the_app_is_running(step):
-    world.launch_ci_screen()
-
 @step(u'I see projects "([^"]*)"$')
 def i_see_projects(step, projects):
     for project in projects.split(", "):

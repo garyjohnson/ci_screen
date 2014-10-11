@@ -17,7 +17,10 @@ class FakeCIServer(object):
 
         project_string = ''
         for project in self.projects:
-            project_string += '<Project webUrl="http://www.test.com" name="{name}" lastBuildLabel="71" lastBuildTime="2014-08-27T16:06:15Z" lastBuildStatus="{status}" activity="Sleeping"/>'.format(name=project['name'], status=project.get('status', 'Success'))
+            project_xml = '<Project webUrl="http://www.test.com" name="{name}" lastBuildLabel="71" lastBuildTime="{last_build_time}" lastBuildStatus="{status}" activity="Sleeping"/>'
+            project_string += project_xml.format(name=project['name'], 
+                    status=project.get('status', 'Success'),
+                    last_build_time=project.get('last_build_time', '2014-08-27T16:06:15Z'))
 
         return '<Projects>{}</Projects>'.format(project_string)
 

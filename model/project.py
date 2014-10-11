@@ -82,5 +82,7 @@ class Project(qt.QObject):
             self.lastBuildLabel = "{num} day{s} ago".format(num=days_ago, s='s' if days_ago > 1 else '' )
         elif hours_ago > 0:
             self.lastBuildLabel = "{num} hour{s} ago".format(num=hours_ago, s='s' if hours_ago > 1 else '')
-        else:
+        elif minutes_ago > 0:
             self.lastBuildLabel = "{num} minute{s} ago".format(num=minutes_ago, s='s' if minutes_ago > 1 else '')
+        else:
+            self.lastBuildLabel = "Just Now"
