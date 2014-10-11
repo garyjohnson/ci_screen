@@ -6,8 +6,8 @@ class FakeCIServer(object):
     def __init__(self, port):
         self.thread = None
         self._host = 'localhost'
-        self._port = port
         self._app = bottle.Bottle()
+        self.port = port
         self.projects = []
 
         self._app.route('/cc.xml', method='GET', callback=self.cc_xml)
@@ -22,7 +22,7 @@ class FakeCIServer(object):
         return '<Projects>{}</Projects>'.format(project_string)
 
     def start(self):
-        self.thread = threading.Thread(target=self._app.run, kwargs={'host':self._host, 'port':self._port, 'quiet':True, 'debug':False})
+        self.thread = threading.Thread(target=self._app.run, kwargs={'host':self._host, 'port':self.port, 'quiet':True, 'debug':False})
         self.thread.setDaemon(True)
         self.thread.start()
 

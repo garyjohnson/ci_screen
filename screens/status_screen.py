@@ -1,4 +1,5 @@
 import json
+import collections
 import pprint
 
 import sip
@@ -61,15 +62,16 @@ class StatusScreen(qt.QQuickItem):
     def get_projects_from_responses(self, responses):
         projects = []
         for response in responses:
-            statuses = xmltodict.parse(response.text)
-            for response_project in statuses.get('Projects').get('Project'):
-                name = response_project.get('@name')
-                activity = response_project.get('@activity')
-                last_build_status = response_project.get('@lastBuildStatus')
-                last_build_time = response_project.get('@lastBuildTime')
+            statuses = xmltodict.parse(response.text, dict_constructor=lambda *args, **kwargs: collections.defaultdict(list, *args, **kwargs))
+            for response_projects in statuses['Projects']:
+                for response_project in response_projects['Project']:
+                    name = response_project.get('@name')
+                    activity = response_project.get('@activity')
+                    last_build_status = response_project.get('@lastBuildStatus')
+                    last_build_time = response_project.get('@lastBuildTime')
 
-                project = model.project.Project(name, activity, last_build_status, last_build_time)
-                projects.append(project)
+                    project = model.project.Project(name, activity, last_build_status, last_build_time)
+                    projects.append(project)
         return projects
 
     @qt.pyqtSlot(list, object)

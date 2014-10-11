@@ -29,19 +29,24 @@ def launch_ci_screen():
 
 @before.all
 def before_all():
-    world.fake_ci_server = ci.FakeCIServer(port=1234)
-    world.fake_ci_server.start()
+    world.port = 6500
 
 @after.all
 def after_all(obj):
-    world.fake_ci_server.stop()
+    for ci_server in world.fake_ci_servers:
+        ci_server.stop()
 
 @before.each_scenario
 def before_each(obj):
     kill_ci_screen()
+    world.fake_ci_servers = []
 
 @after.each_scenario
 def after_each(obj):
     kill_ci_screen()
     config_helper.restore_config_file()
-    world.fake_ci_server.projects = []
+
+@world.absorb
+def get_port():
+    world.port += 1
+    return world.port

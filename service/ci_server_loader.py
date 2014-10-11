@@ -7,6 +7,8 @@ def get_ci_servers():
     sections = config_parser.get('ci_servers', 'sections')
     ci_servers = []
     for section in sections.split(','):
+        if not config_parser.has_section(section):
+            continue
 
         username = None
         if config_parser.has_option(section, 'username'):

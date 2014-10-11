@@ -1,4 +1,5 @@
 import time
+import random
 
 from lettuce import *
 import pqaut.client as pqaut
@@ -7,12 +8,22 @@ import features.support.config_helper as config_helper
 import features.support.fake_ci_server as ci
     
 
-@step(u'the CI server has projects:$')
+@step(u'I have a CI server with projects:$')
 def the_ci_server_has_projects(step):
+    port = world.get_port()
+    ci_server = ci.FakeCIServer(port=port)
+    ci_server.start()
     for project in step.hashes:
-        world.fake_ci_server.projects.append(project)
+        ci_server.projects.append(project)
+    world.fake_ci_servers.append(ci_server)
 
-    config_helper.build_config({'ci_servers':{'sections':'test'}, 'test':{'url':'http://localhost:1234'}})
+    config = {'ci_servers':{'sections':''}}
+    for index in range(len(world.fake_ci_servers)):
+        world_ci_server = world.fake_ci_servers[index]
+        config['ci_servers']['sections'] += '{},'.format(index)
+        config[str(index)] = {'url':'http://localhost:{}'.format(world_ci_server.port)}
+
+    config_helper.build_config(config)
 
 @step(u'the app is running$')
 def the_app_is_running(step):
