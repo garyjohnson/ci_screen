@@ -18,14 +18,15 @@ def kill_ci_screen():
     if world.app_process:
         subprocess.Popen.kill(world.app_process)
 
-def get_linux_lib_dir():
-    paths = ['/usr/lib/arm-linux-gnueabihf', '/usr/lib/arm-linux-gnueabi', '/usr/lib']
+def get_linux_faketime_path():
+    paths = ['/usr/lib', '/usr/lib/arm-linux-gnueabihf', '/usr/lib/arm-linux-gnueabi']
     for path in paths:
-        if os.path.exists(path):
-            return path
+        faketime_path = '{}/faketime/libfaketime.so.1'.format(path)
+        if os.path.exists(faketime_path):
+            return faketime_path
 
 def add_faketime_to_env_vars(env_vars, fake_time):
-    faketime_vars = { 'LD_PRELOAD': '{}/faketime/libfaketime.so.1'.format(get_linux_lib_dir()) }
+    faketime_vars = { 'LD_PRELOAD': get_linux_faketime_path() }
     if sys.platform == 'darwin':
         faketime_vars = {   'DYLD_INSERT_LIBRARIES': '/usr/local/lib/faketime/libfaketime.1.dylib:/System/Library/Frameworks/OpenGL.framework/Resources/GLEngine.bundle/GLEngine',
                             'DYLD_FORCE_FLAT_NAMESPACE': '1'}
