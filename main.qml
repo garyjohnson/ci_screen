@@ -1,13 +1,11 @@
 import QtQuick 2.2
-import QtQuick.Window 2.1
+import QtQuick.Window 2.2
 
-Window {
-    id: root
-
-    Loader {
-        anchors.fill: parent
-        source: 'screens/status_screen.qml'
-    }
+Loader {
+    width: Screen.width
+    height: Screen.height
+    source: 'screens/status_screen.qml'
+    asynchronous: true
 
     FontLoader {
         source: 'assets/open-sans/OpenSans-Regular.ttf'
@@ -16,5 +14,5 @@ Window {
     FontLoader {
         source: 'assets/open-sans/OpenSans-Bold.ttf'
     }
-
 }
+
