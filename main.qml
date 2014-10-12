@@ -1,9 +1,8 @@
 import QtQuick 2.2
-import QtQuick.Window 2.2
+import QtQuick.Window 2.1
 
 Loader {
-    width: Screen.width
-    height: Screen.height
+    anchors.fill: parent
     source: 'screens/status_screen.qml'
     asynchronous: true
 

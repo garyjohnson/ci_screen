@@ -20,7 +20,9 @@ if __name__ == '__main__':
     qmlRegisterType(model.projects_model.ProjectsModel, 'Model', 1, 0, 'ProjectsModel')
 
     window = QQuickView(QUrl('main.qml'))
-    window.setResizeMode(QQuickView.SizeViewToRootObject)
+    window.setHeight(window.screen().size().height())
+    window.setWidth(window.screen().size().width())
+    window.setResizeMode(QQuickView.SizeRootObjectToView)
     window.setFlags(Qt.WindowFullscreenButtonHint)
     window.showFullScreen()
 
