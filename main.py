@@ -1,14 +1,21 @@
 #!/usr/bin/env python
 
 import sys
-import screens.status_screen as status_screen
+import signal
 import model
 
 import pqaut.server as pqaut
 from PyQt5.Qt import QApplication, qmlRegisterType, QUrl, QQuickView, Qt, QWindow
 
+import screens.status_screen as status_screen
+
+
+def exit_on_ctrl_c():
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 if __name__ == '__main__':
+
+    exit_on_ctrl_c()
 
     if '--automation_server' in sys.argv:
         pqaut.start_automation_server()

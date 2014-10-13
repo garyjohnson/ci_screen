@@ -19,7 +19,7 @@ def kill_ci_screen():
         subprocess.Popen.kill(world.app_process)
 
 def get_linux_faketime_path():
-    paths = ['/usr/lib', '/usr/lib/arm-linux-gnueabihf', '/usr/lib/arm-linux-gnueabi']
+    paths = ['/usr/local/lib', '/usr/lib', '/usr/lib/arm-linux-gnueabihf', '/usr/lib/arm-linux-gnueabi']
     for path in paths:
         faketime_path = '{}/faketime/libfaketime.so.1'.format(path)
         if os.path.exists(faketime_path):

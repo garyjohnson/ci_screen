@@ -26,7 +26,7 @@ class FakeCIServer(object):
 
     def start(self):
         self.thread = threading.Thread(target=self._app.run, kwargs={'host':self._host, 'port':self.port, 'quiet':True, 'debug':False})
-        self.thread.setDaemon(True)
+        self.thread.daemon = True
         self.thread.start()
 
     def stop(self):
