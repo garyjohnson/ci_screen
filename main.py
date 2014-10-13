@@ -22,6 +22,7 @@ if __name__ == '__main__':
     window = QQuickView(QUrl('main.qml'))
     window.setHeight(window.screen().size().height())
     window.setWidth(window.screen().size().width())
+
     window.setResizeMode(QQuickView.SizeRootObjectToView)
     window.setFlags(Qt.WindowFullscreenButtonHint)
     window.showFullScreen()

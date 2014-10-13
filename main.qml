@@ -2,9 +2,9 @@ import QtQuick 2.2
 import QtQuick.Window 2.1
 
 Loader {
-    anchors.fill: parent
+    height: parent == null ? 0 : parent.height
+    width: parent == null ? 0 : parent.width
     source: 'screens/status_screen.qml'
-    asynchronous: true
 
     FontLoader {
         source: 'assets/open-sans/OpenSans-Regular.ttf'
