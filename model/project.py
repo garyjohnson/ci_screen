@@ -74,9 +74,9 @@ class Project(qt.QObject):
         now = datetime.datetime.utcnow().replace(tzinfo = pytz.utc)
 
         built_ago = last_build_datetime - now
-        minutes_ago = abs(int(built_ago.total_seconds())) / 60
-        hours_ago = minutes_ago / 60
-        days_ago = hours_ago / 24
+        minutes_ago = int(abs(int(built_ago.total_seconds())) / 60)
+        hours_ago = int(minutes_ago / 60)
+        days_ago = int(hours_ago / 24)
 
         if days_ago > 0:
             self.lastBuildLabel = "{num} day{s} ago".format(num=days_ago, s='s' if days_ago > 1 else '' )
