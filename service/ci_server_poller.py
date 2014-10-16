@@ -40,13 +40,14 @@ class CIServerPoller(object):
                 if username is not None and token is not None:
                     auth = requests.auth.HTTPBasicAuth(username, token)
                 try:
-                    response = requests.get('{0}/cc.xml'.format(url), auth=auth)
+                    response = requests.get('{}/cc.xml'.format(url), auth=auth)
                 except Exception as e:
                     print e
                     error = e
 
                 responses.append(response)
 
-            pub.sendMessage("CI_UPDATE", responses=responses, error=error)
+            if error is None:
+                pub.sendMessage("CI_UPDATE", responses=responses, error=error)
                 
             time.sleep(10)
