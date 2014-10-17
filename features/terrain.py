@@ -12,6 +12,7 @@ import features.support.config_helper as config_helper
 
 world.app_path = "./main.py"
 world.app_process = None
+world.poll_rate = 10
 
 @world.absorb
 def kill_ci_screen():
@@ -76,3 +77,14 @@ def after_each(obj):
 def get_port():
     world.port += 1
     return world.port
+
+@world.absorb
+def rebuild_config_file():
+    config = {'general':{'poll_rate_seconds':str(world.poll_rate)}, 'ci_servers':{'sections':''}}
+    for index in range(len(world.fake_ci_servers)):
+        world_ci_server = world.fake_ci_servers[index]
+        config['ci_servers']['sections'] += '{},'.format(index)
+        config[str(index)] = {'url':'http://localhost:{}'.format(world_ci_server.port)}
+
+    config_helper.build_config(config)
+

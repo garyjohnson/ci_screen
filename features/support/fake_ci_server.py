@@ -9,10 +9,14 @@ class FakeCIServer(object):
         self._app = bottle.Bottle()
         self.port = port
         self.projects = []
+        self.failing = False
 
         self._app.route('/cc.xml', method='GET', callback=self.cc_xml)
 
     def cc_xml(self):
+        if self.failing:
+            bottle.abort(503, 'CI server is down!')
+
         bottle.response.content_type = 'xml/application'
 
         project_string = ''

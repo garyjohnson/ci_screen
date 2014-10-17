@@ -5,9 +5,8 @@ import features.support.helpers as helpers
 import features.support.fake_ci_server as ci
 import features.support.config_helper as config_helper
 
-
 @step(u'I have a CI server with projects:$')
-def the_ci_server_has_projects(step):
+def i_have_a_ci_server_with_projects(step):
     port = world.get_port()
     ci_server = ci.FakeCIServer(port=port)
     ci_server.start()
@@ -15,13 +14,7 @@ def the_ci_server_has_projects(step):
         ci_server.projects.append(project)
     world.fake_ci_servers.append(ci_server)
 
-    config = {'general':{'poll_rate_seconds':'10'}, 'ci_servers':{'sections':''}}
-    for index in range(len(world.fake_ci_servers)):
-        world_ci_server = world.fake_ci_servers[index]
-        config['ci_servers']['sections'] += '{},'.format(index)
-        config[str(index)] = {'url':'http://localhost:{}'.format(world_ci_server.port)}
-
-    config_helper.build_config(config)
+    world.rebuild_config_file()
 
 @step(u'the app is running$')
 def the_app_is_running(step):

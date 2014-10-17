@@ -11,8 +11,9 @@ class Project(qt.QObject):
     last_build_time_changed=qt.pyqtSignal()
     last_build_label_changed=qt.pyqtSignal()
 
-    def __init__(self, name, activity, last_build_status, last_build_time):
+    def __init__(self, name, activity, last_build_status, last_build_time, ci_server):
         super(Project, self).__init__()
+        self.ci_server = ci_server
         self._name = name
         self._activity = activity
         self._last_build_status = last_build_status

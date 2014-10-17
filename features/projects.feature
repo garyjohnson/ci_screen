@@ -22,7 +22,6 @@ Feature: Projects
     And I do not see failed projects "My Project"
     And I do not see successful projects "My Other Project"
 
-  @wip
   Scenario: Order errors first
     Given I have a CI server with projects:
       | name              | status    |

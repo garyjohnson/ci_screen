@@ -1,5 +1,6 @@
 import ConfigParser as config
 
+
 def get_ci_servers():
     config_parser = config.SafeConfigParser(allow_no_value=True)
     config_parser.readfp(open('ci_screen.cfg'))
@@ -19,6 +20,7 @@ def get_ci_servers():
             token = config_parser.get(section, 'token')
 
         ci_servers.append({ 
+            'name': section,
             'url': config_parser.get(section, 'url'),
             'username': username,
             'token': token })

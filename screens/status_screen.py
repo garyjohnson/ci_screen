@@ -1,8 +1,6 @@
 import json
 import collections
-import pprint
 
-import sip
 import PyQt5.Qt as qt
 import xmltodict
 import pubsub.pub as pub
@@ -17,7 +15,7 @@ class StatusScreen(qt.QQuickItem):
     projects_changed = qt.pyqtSignal()
     failed_projects_changed = qt.pyqtSignal()
     error_changed = qt.pyqtSignal()
-    on_status_updated = qt.pyqtSignal(list, object)
+    on_status_updated = qt.pyqtSignal(dict, dict)
 
     def __init__(self, *args, **kwargs):
         super(StatusScreen, self).__init__(*args, **kwargs)
@@ -61,7 +59,8 @@ class StatusScreen(qt.QQuickItem):
 
     def get_projects_from_responses(self, responses):
         projects = []
-        for response in responses:
+        for ci_server in responses:
+            response = responses[ci_server]
             statuses = xmltodict.parse(response.text, dict_constructor=lambda *args, **kwargs: collections.defaultdict(list, *args, **kwargs))
             for response_projects in statuses['Projects']:
                 for response_project in response_projects['Project']:
@@ -70,25 +69,26 @@ class StatusScreen(qt.QQuickItem):
                     last_build_status = response_project.get('@lastBuildStatus')
                     last_build_time = response_project.get('@lastBuildTime')
 
-                    project = model.project.Project(name, activity, last_build_status, last_build_time)
+                    project = model.project.Project(name, activity, last_build_status, last_build_time, ci_server)
                     projects.append(project)
         return projects
 
-    @qt.pyqtSlot(list, object)
-    def on_status_update_on_ui_thread(self, responses, error):
+    @qt.pyqtSlot(dict, dict)
+    def on_status_update_on_ui_thread(self, responses, errors):
+        bad_ci_servers = errors.keys()
         new_projects = [p for p in self.get_projects_from_responses(responses) if p.lastBuildStatus != 'Unknown']
 
-        self._synchronize_projects(self.projects, [p for p in new_projects if not p.is_failed()])
-        self._synchronize_projects(self.failed_projects, [p for p in new_projects if p.is_failed()])
+        self._synchronize_projects(self.projects, [p for p in new_projects if not p.is_failed()], bad_ci_servers)
+        self._synchronize_projects(self.failed_projects, [p for p in new_projects if p.is_failed()], bad_ci_servers)
 
-    def on_status_update(self, responses, error):
-        self.on_status_updated.emit(responses, error)
+    def on_status_update(self, responses, errors):
+        self.on_status_updated.emit(responses, errors)
 
-    def _synchronize_projects(self, projects_model, new_projects):
+    def _synchronize_projects(self, projects_model, new_projects, bad_ci_servers):
         new_project_names = [p.name for p in new_projects]
         old_project_names = [p.name for p in projects_model.projects]
 
-        for removed_project in [p for p in projects_model.projects if p.name not in new_project_names]:
+        for removed_project in [p for p in projects_model.projects if p.name not in new_project_names and p.ci_server not in bad_ci_servers]:
             projects_model.remove(removed_project)
 
         for added_project in [p for p in new_projects if p.name not in old_project_names]:

@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
+import os
 import sys
 import signal
 import model
+import logging
 
 import pqaut.server as pqaut
 from PyQt5.Qt import QApplication, qmlRegisterType, QUrl, QQuickView, Qt, QWindow
@@ -35,3 +37,15 @@ if __name__ == '__main__':
     window.showFullScreen()
 
     sys.exit(app.exec_())
+
+
+log_levels = {
+    'DEBUG': logging.DEBUG,
+    'INFO': logging.INFO,
+    'WARNING': logging.WARNING,
+    'ERROR': logging.ERROR,
+}
+log_level_name = os.environ.get('CI_LOG', 'ERROR')
+logging.basicConfig(level=log_levels[log_level_name])
+logger = logging.getLogger(__name__)
+logger.info('ci_screen log level is {}'.format(log_level_name))

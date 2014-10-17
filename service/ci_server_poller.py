@@ -1,9 +1,15 @@
-import ConfigParser as config
-import service.ci_server_loader as ci_loader
-import pubsub.pub as pub
-import threading
-import requests
+import logging
 import time
+import threading
+import ConfigParser as config
+
+import pubsub.pub as pub
+import requests
+
+import service.ci_server_loader as ci_loader
+
+
+logger = logging.getLogger(__name__)
 
 class CIServerPoller(object):
 
@@ -32,10 +38,11 @@ class CIServerPoller(object):
     def poll_for_changes(self):
         while not self._stop.isSet():
 
-            error = None
-            responses = []
+            errors = {}
+            responses = {}
             for ci_server in self.ci_servers:
-                url = ci_server.get('url')
+                name = ci_server['name']
+                url = ci_server['url']
                 username = ci_server.get('username')
                 token = ci_server.get('token')
                 auth = None
@@ -43,15 +50,15 @@ class CIServerPoller(object):
                     auth = requests.auth.HTTPBasicAuth(username, token)
                 try:
                     response = requests.get('{}/cc.xml'.format(url), auth=auth)
-                except Exception as e:
-                    print e
-                    error = e
+                    if response.status_code == 200:
+                        responses[name] = response
+                    else:
+                        raise Exception('ci server {} returned {}: {}'.format(url, response, response.text))
+                except Exception as ex:
+                    logger.warning(ex)
+                    errors[name] = ex
 
-                responses.append(response)
-
-            if error is None:
-                pub.sendMessage("CI_UPDATE", responses=responses, error=error)
-                
+            pub.sendMessage("CI_UPDATE", responses=responses, errors=errors)
             time.sleep(self._poll_rate)
 
     def get_poll_rate(self):
