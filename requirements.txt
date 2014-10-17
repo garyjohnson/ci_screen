@@ -4,7 +4,7 @@ extras==0.0.3
 fuzzywuzzy==0.3.2
 -e git+https://github.com/gabrielfalcao/lettuce.git@d757885b50fe8fa9e06a734f168731afb4095e6c#egg=lettuce-dev
 nose==1.3.4
-pqaut==0.2.8
+pqaut==0.2.9
 python-dateutil==2.2
 python-mimeparse==0.1.4
 python-subunit==0.0.21
