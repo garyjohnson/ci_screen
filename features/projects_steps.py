@@ -1,5 +1,6 @@
 from lettuce import *
 import pqaut.client as pqaut
+import features.support.helpers as helpers
     
 
 @step(u'I see projects "([^"]*)"$')
@@ -26,3 +27,7 @@ def i_do_not_see_failed_projects(step, projects):
 def i_do_not_see_successful_projects(step, projects):
     for project in projects.split(", "):
         pqaut.assert_is_not_visible(project, 'successful_project')
+
+@step(u'"([^"]*)" is above "([^"]*)"$')
+def is_above(step, above, below):
+    helpers.assert_is_above(above, below)

@@ -15,7 +15,7 @@ def the_ci_server_has_projects(step):
         ci_server.projects.append(project)
     world.fake_ci_servers.append(ci_server)
 
-    config = {'ci_servers':{'sections':''}}
+    config = {'general':{'poll_rate_seconds':'10'}, 'ci_servers':{'sections':''}}
     for index in range(len(world.fake_ci_servers)):
         world_ci_server = world.fake_ci_servers[index]
         config['ci_servers']['sections'] += '{},'.format(index)

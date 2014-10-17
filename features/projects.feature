@@ -22,6 +22,17 @@ Feature: Projects
     And I do not see failed projects "My Project"
     And I do not see successful projects "My Other Project"
 
+  @wip
+  Scenario: Order errors first
+    Given I have a CI server with projects:
+      | name              | status    |
+      | My Project        | Success   |
+      | My Other Project  | Failure   |
+      | My Other Other Project  | Failure   |
+    And the app is running
+    Then "My Other Project" is above "My Project"
+    And "My Other Other Project" is above "My Project"
+
   Scenario: Show Projects from Multiple CI Servers
     Given I have a CI server with projects:
       | name              |
