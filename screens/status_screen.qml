@@ -164,6 +164,7 @@ StatusScreen {
 
                 var currentY = listview.contentY;
                 var destinationY
+                listview.currentIndex = desiredIndex
                 listview.positionViewAtIndex(desiredIndex, ListView.Beginning);
                 destinationY = listview.contentY;
                 scrollAnimation.from = currentY;
