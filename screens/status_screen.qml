@@ -90,12 +90,7 @@ StatusScreen {
 
                 interactive: false
 
-                highlightRangeMode: ListView.StrictlyEnforceRange
-                highlightMoveVelocity: 1500
                 snapMode: ListView.SnapToItem
-                flickableDirection: Flickable.VerticalFlick
-                flickDeceleration: 400
-                maximumFlickVelocity: 4500
                 keyNavigationWraps: true
 
                 spacing: root.itemSpacing
@@ -162,16 +157,21 @@ StatusScreen {
         PauseAnimation { duration: 5000 }
         ScriptAction { script: {
                 var itemsPerPage = Math.floor(listview.height / (root.itemHeight + root.itemSpacing))
-                var itemsToScroll = itemsPerPage
                 var desiredIndex = listview.currentIndex + itemsPerPage
                 if (desiredIndex > listview.count - 1) {
-                    itemsToScroll = Math.floor(listview.count % itemsPerPage)
+                    desiredIndex = 0
                 } 
 
-                for (var i = 0; i < itemsToScroll; i++) {
-                    listview.incrementCurrentIndex()
-                }
+                var currentY = listview.contentY;
+                var destinationY
+                listview.positionViewAtIndex(desiredIndex, ListView.Beginning);
+                destinationY = listview.contentY;
+                scrollAnimation.from = currentY;
+                scrollAnimation.to = destinationY;
+                scrollAnimation.running = true
             }
         }
     }
+
+    NumberAnimation { id: scrollAnimation; target: listview; property: "contentY"; duration: 500; easing.type: Easing.InOutQuad }
 }
