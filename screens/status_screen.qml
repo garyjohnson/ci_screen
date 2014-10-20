@@ -91,11 +91,11 @@ StatusScreen {
                 interactive: false
 
                 highlightRangeMode: ListView.StrictlyEnforceRange
-                highlightMoveVelocity: 3200
+                highlightMoveVelocity: 1500
                 snapMode: ListView.SnapToItem
                 flickableDirection: Flickable.VerticalFlick
-                flickDeceleration: 800
-                maximumFlickVelocity: 9000
+                flickDeceleration: 400
+                maximumFlickVelocity: 4500
                 keyNavigationWraps: true
 
                 spacing: root.itemSpacing

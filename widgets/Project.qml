@@ -19,11 +19,11 @@ Item {
         id: failAnimation
         loops: Animation.Infinite
         PauseAnimation { duration: 3000 }
-        NumberAnimation { target: root; properties: "scale"; to: 0.97; duration: 100; easing.type: Easing.OutQuad }
-        NumberAnimation { target: root; properties: "scale"; to: 1.03; duration: 100; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: root; properties: "scale"; to: 1; duration: 75; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: root; properties: "scale"; to: 1.03; duration: 100; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: root; properties: "scale"; to: 1; duration: 60; easing.type: Easing.InQuad }
+        NumberAnimation { target: root; properties: "scale"; to: 0.97; duration: 120; easing.type: Easing.OutQuad }
+        NumberAnimation { target: root; properties: "scale"; to: 1.03; duration: 120; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: root; properties: "scale"; to: 1; duration: 100; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: root; properties: "scale"; to: 1.03; duration: 120; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: root; properties: "scale"; to: 1; duration: 100; easing.type: Easing.InQuad }
         PauseAnimation { duration: 4000 }
     }
 
