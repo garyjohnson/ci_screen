@@ -58,3 +58,17 @@ Feature: Last Time Built
     And the app is running at "2014-08-15 12:15:15"
     Then I see failed projects "My Project"
     And I see "13 days ago"
+
+  @wip
+  Scenario: Sort successful builds by last build time
+    Given I have a CI server with projects:
+      | name            | status    | last_build_time       |
+      | My Project 1  | Success   | 2013-08-02T11:01:15Z  |
+      | My Project 2  | Success   | 2014-08-02T11:01:15Z  |
+    And I have a CI server with projects:
+      | name            | status    | last_build_time       |
+      | My Project 3  | Success   | 2014-01-01T11:01:15Z  |
+    And my poll rate is 1 seconds
+    And the app is running at "2014-08-15 12:15:15"
+    Then "My Project 2" is above "My Project 3"
+    And "My Project 3" is above "My Project 1"

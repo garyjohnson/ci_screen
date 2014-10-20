@@ -96,3 +96,5 @@ class StatusScreen(qt.QQuickItem):
 
         for updated_project in [p for p in new_projects if p.name in old_project_names]:
             projects_model.update(updated_project)
+
+        projects_model.sort_by_last_build_time()
