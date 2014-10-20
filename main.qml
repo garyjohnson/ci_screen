@@ -2,8 +2,9 @@ import QtQuick 2.2
 import QtQuick.Window 2.1
 
 Loader {
-    height: parent == null ? 0 : parent.height
-    width: parent == null ? 0 : parent.width
+    id: root
+    height: parent == null ? 0 : parent.width
+    width: parent == null ? 0 : parent.height
     source: 'screens/status_screen.qml'
 
     FontLoader {
@@ -12,6 +13,12 @@ Loader {
 
     FontLoader {
         source: 'assets/open-sans/OpenSans-Bold.ttf'
+    }
+
+    transform: Rotation {
+        angle: 270
+        origin.x: root.width / 2
+        origin.y: root.width / 2
     }
 }
 
