@@ -4,9 +4,11 @@ import QtQuick.Window 2.1
 Loader {
 
     id: root
-    property int parentHeight: parent == null ? 0 : parent.height
-    property int parentWidth: parent == null ? 0 : parent.width
+    property int parentHeight
+    property int parentWidth
 
+    parentHeight: parent == null ? 0 : parent.height
+    parentWidth: parent == null ? 0 : parent.width
     x: parentWidth / 2 - width / 2 
     y: parentHeight / 2 - height / 2 
     height: screenRotation % 180 == 0 ? parentHeight : parentWidth
