@@ -2,9 +2,15 @@ import QtQuick 2.2
 import QtQuick.Window 2.1
 
 Loader {
+
     id: root
-    height: parent == null ? 0 : parent.width
-    width: parent == null ? 0 : parent.height
+    property int parentHeight: parent == null ? 0 : parent.height
+    property int parentWidth: parent == null ? 0 : parent.width
+
+    x: parentWidth / 2 - width / 2 
+    y: parentHeight / 2 - height / 2 
+    height: screenRotation % 180 == 0 ? parentHeight : parentWidth
+    width: screenRotation % 180 == 0 ? parentWidth : parentHeight
     source: 'screens/status_screen.qml'
 
     FontLoader {
@@ -16,9 +22,9 @@ Loader {
     }
 
     transform: Rotation {
-        angle: 270
+        angle: screenRotation
         origin.x: root.width / 2
-        origin.y: root.width / 2
+        origin.y: root.height / 2
     }
 }
 

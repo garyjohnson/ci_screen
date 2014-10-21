@@ -1,4 +1,7 @@
-import ConfigParser as config
+try:
+    import ConfigParser as config
+except:
+    import configparser as config
 
 
 def get_ci_servers():

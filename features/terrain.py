@@ -67,6 +67,7 @@ def after_all(obj):
 def before_each(obj):
     kill_ci_screen()
     world.fake_ci_servers = []
+    config_helper.build_config()
 
 @after.each_scenario
 def after_each(obj):

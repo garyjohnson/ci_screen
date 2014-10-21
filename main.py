@@ -7,9 +7,10 @@ import model
 import logging
 
 import pqaut.server as pqaut
-from PyQt5.Qt import QApplication, qmlRegisterType, QUrl, QQuickView, Qt, QWindow
+from PyQt5.Qt import QApplication, qmlRegisterType
 
 import screens.status_screen as status_screen
+import main_window
 
 
 def exit_on_ctrl_c():
@@ -28,12 +29,7 @@ if __name__ == '__main__':
     qmlRegisterType(model.project.Project, 'Model', 1, 0, 'Project')
     qmlRegisterType(model.projects_model.ProjectsModel, 'Model', 1, 0, 'ProjectsModel')
 
-    window = QQuickView(QUrl('main.qml'))
-    window.setHeight(window.screen().size().height())
-    window.setWidth(window.screen().size().width())
-
-    window.setResizeMode(QQuickView.SizeRootObjectToView)
-    window.setFlags(Qt.WindowFullscreenButtonHint)
+    window = main_window.MainWindow()
     window.showFullScreen()
 
     sys.exit(app.exec_())

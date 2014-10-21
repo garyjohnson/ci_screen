@@ -1,7 +1,10 @@
 import logging
 import time
 import threading
-import ConfigParser as config
+try:
+    import ConfigParser as config
+except:
+    import configparser as config
 
 import pubsub.pub as pub
 import requests
@@ -63,6 +66,6 @@ class CIServerPoller(object):
 
     def get_poll_rate(self):
         config_parser = config.SafeConfigParser(allow_no_value=False)
-        config_parser.readfp(open('ci_screen.cfg'))
-
+        with open('ci_screen.cfg') as config_file:
+            config_parser.readfp(config_file)
         return int(config_parser.get('general', 'poll_rate_seconds'))

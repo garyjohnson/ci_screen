@@ -16,7 +16,10 @@ def _set_config_settings(config_settings):
     if os.path.isfile(_path_to(config_file)):
         config.read(_path_to(config_file))
 
-    for group_name, group_settings in config_settings.items():
+    default_settings = {'general': { 'rotation':'0', 'poll_rate_seconds':'10'}}
+    default_settings.update(config_settings)
+
+    for group_name, group_settings in default_settings.items():
         if not config.has_section(group_name):
             config.add_section(group_name)
 
