@@ -67,7 +67,7 @@ def after_all(obj):
 def before_each(obj):
     kill_ci_screen()
     world.fake_ci_servers = []
-    config_helper.build_config()
+    rebuild_config_file()
 
 @after.each_scenario
 def after_each(obj):
@@ -81,11 +81,11 @@ def get_port():
 
 @world.absorb
 def rebuild_config_file():
-    config = {'general':{'poll_rate_seconds':str(world.poll_rate)}, 'ci_servers':{'sections':''}}
+    config = {'general':{'poll_rate_seconds':str(world.poll_rate), 'rotation':'0'},  'ci_servers':{'sections':''}}
     for index in range(len(world.fake_ci_servers)):
         world_ci_server = world.fake_ci_servers[index]
         config['ci_servers']['sections'] += '{},'.format(index)
-        config[str(index)] = {'url':'http://localhost:{}'.format(world_ci_server.port)}
+        config[str(index)] = {'url':'http://0.0.0.0:{}'.format(world_ci_server.port)}
 
     config_helper.build_config(config)
 
