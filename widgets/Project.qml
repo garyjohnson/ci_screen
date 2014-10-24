@@ -19,7 +19,6 @@ Item {
     SequentialAnimation {
         id: buildingAnimation
         loops: Animation.Infinite
-        running: root.buildActivity == 'Building'
         NumberAnimation { target: root; properties: "opacity"; to: 0.1; duration: 700; easing.type: Easing.OutQuad }
         NumberAnimation { target: root; properties: "opacity"; to: 1; duration: 700; easing.type: Easing.InOutQuad }
     }
@@ -120,5 +119,20 @@ Item {
             PropertyChanges { target: root; automation_type: 'unknown_project' }
         }
     ]
+
+    StateGroup {
+        state: root.buildActivity
+        states: [
+            State {
+                name: 'Sleeping'
+                PropertyChanges { target: root; opacity: 1}
+                PropertyChanges { target: buildingAnimation; running: false }
+            },
+            State {
+                name: 'Building'
+                PropertyChanges { target: buildingAnimation; running: true }
+            }
+        ]
+    }
 }
 
