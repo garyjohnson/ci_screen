@@ -114,6 +114,7 @@ StatusScreen {
             projectName: name
             buildStatus: lastBuildStatus
             lastBuild: lastBuildLabel
+            buildActivity: activity
         }
     }
 

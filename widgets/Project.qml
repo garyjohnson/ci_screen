@@ -11,9 +11,18 @@ Item {
 
     property string projectName: ''
     property string buildStatus: 'Unknown'
+    property string buildActivity: ''
     property string lastBuild: ''
 
     transformOrigin: Item.Right
+
+    SequentialAnimation {
+        id: buildingAnimation
+        loops: Animation.Infinite
+        running: root.buildActivity == 'Building'
+        NumberAnimation { target: root; properties: "opacity"; to: 0.1; duration: 700; easing.type: Easing.OutQuad }
+        NumberAnimation { target: root; properties: "opacity"; to: 1; duration: 700; easing.type: Easing.InOutQuad }
+    }
 
     SequentialAnimation {
         id: failAnimation

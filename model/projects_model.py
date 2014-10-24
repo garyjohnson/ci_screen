@@ -11,6 +11,7 @@ class ProjectsModel(qt.QAbstractListModel):
     LAST_BUILD_STATUS_ROLE = qt.Qt.UserRole + 2
     LAST_BUILD_LABEL_ROLE = qt.Qt.UserRole + 3
     LAST_BUILD_TIME_ROLE = qt.Qt.UserRole + 4
+    ACTIVITY_ROLE = qt.Qt.UserRole + 5
     parent_index = qt.QModelIndex()
 
     def __init__(self):
@@ -60,6 +61,7 @@ class ProjectsModel(qt.QAbstractListModel):
         roles[self.LAST_BUILD_STATUS_ROLE] = "lastBuildStatus"
         roles[self.LAST_BUILD_LABEL_ROLE] = "lastBuildLabel"
         roles[self.LAST_BUILD_TIME_ROLE] = "lastBuildTime"
+        roles[self.ACTIVITY_ROLE] = "activity"
         return roles
 
     def rowCount(self, parent=parent_index):
@@ -76,4 +78,6 @@ class ProjectsModel(qt.QAbstractListModel):
                 return qt.QVariant(project.lastBuildLabel)
             elif role == self.LAST_BUILD_TIME_ROLE:
                 return qt.QVariant(project.lastBuildTime)
+            elif role == self.ACTIVITY_ROLE:
+                return qt.QVariant(project.activity)
         return qt.QVariant()
