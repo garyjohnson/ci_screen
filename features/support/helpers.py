@@ -84,7 +84,7 @@ def get_port():
     return port
 
 def rebuild_config_file(context):
-    config = {'general':{'poll_rate_seconds':str(context.poll_rate), 'rotation':'0'},  'ci_servers':{'sections':''}}
+    config = {'general':{'poll_rate_seconds':str(context.poll_rate), 'rotation':'0', 'snow':'False'},  'ci_servers':{'sections':''}}
     for index in range(len(context.fake_ci_servers)):
         world_ci_server = context.fake_ci_servers[index]
         config['ci_servers']['sections'] += '{},'.format(index)

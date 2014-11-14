@@ -197,7 +197,7 @@ StatusScreen {
         system: particles
         emitRate: 20
         lifeSpan: 7000
-        enabled: failedList.count == 0
+        enabled: root.snow && failedList.count == 0
         velocity: PointDirection{ y:80; yVariation: 40; }
         acceleration: PointDirection{ y: 4 }
         size: 20
