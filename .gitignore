@@ -1,5 +1,6 @@
 .DS_Store
 .venv
+.venv3
 ci_screen.cfg.private
 ci_screen.cfg
 
