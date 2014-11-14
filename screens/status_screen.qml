@@ -1,9 +1,9 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
+import QtQuick.Particles 2.0
 import Screens 1.0
 import '../widgets'
-
 
 StatusScreen {
 
@@ -176,4 +176,32 @@ StatusScreen {
     }
 
     NumberAnimation { id: scrollAnimation; target: listview; property: "contentY"; duration: 500; easing.type: Easing.InOutQuad }
+
+    ParticleSystem { id: particles }
+
+    ImageParticle {
+        system: particles
+        sprites: Sprite{
+            source: "../assets/Snowflake.png"
+            frameCount: 1
+        }
+    }
+    Wander { 
+        id: wanderer
+        system: particles
+        anchors.fill: parent
+        xVariance: 360/(affectedParameter+1);
+        pace: 100*(affectedParameter+1);
+    }
+    Emitter {
+        system: particles
+        emitRate: 20
+        lifeSpan: 7000
+        enabled: failedList.count == 0
+        velocity: PointDirection{ y:80; yVariation: 40; }
+        acceleration: PointDirection{ y: 4 }
+        size: 20
+        sizeVariation: 10
+        anchors.fill: parent
+    }
 }
