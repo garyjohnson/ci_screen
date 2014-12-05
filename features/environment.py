@@ -1,13 +1,14 @@
 import behave
+import logging
 
 import features.support.helpers as helpers
 import features.support.config_helper as config_helper
 
 
 behave.use_step_matcher("re")
+logging.getLogger("requests").setLevel(logging.ERROR)
 
 def before_all(context):
-    context.config.logging_level="ERROR"
     context.config.setup_logging()
 
 def before_scenario(context, scenario):
