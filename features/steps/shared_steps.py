@@ -25,6 +25,10 @@ def the_app_is_running_at(context, time):
     local_time_string = helpers.get_local_time_string(time)
     helpers.launch_ci_screen(context, local_time_string)
 
+@given(u'the app is running at "(?P<time>[^"]*)" UTC$')
+def the_app_is_running_at(context, time):
+    helpers.launch_ci_screen(context, time)
+
 @then(u'I see "(?P<text>[^"]*)"$')
 def i_see(context, text):
     pqaut.assert_is_visible(text)

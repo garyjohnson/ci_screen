@@ -15,7 +15,9 @@ def before_scenario(context, scenario):
     context.app_path = "./main.py"
     context.app_process = None
     context.poll_rate = 10
+    context.dev_null = None
     context.fake_ci_servers = []
+    context.holiday = False
     helpers.rebuild_config_file(context)
 
 def after_scenario(context, scenario):

@@ -15,6 +15,7 @@ import features.support.config_helper as config_helper
 
 
 port = 6500
+LOG_DEBUG = 10
 
 def get_local_time_string(utc_time_string):
     date_time = dateutil.parser.parse(utc_time_string).replace(tzinfo=pytz.utc)
@@ -58,23 +59,23 @@ def add_faketime_to_env_vars(env_vars, fake_time):
 def kill_ci_screen(context):
     if context.app_process:
         subprocess.Popen.kill(context.app_process)
+    if context.dev_null:
+        context.dev_null.close()
 
 def launch_ci_screen(context, fake_time = None):
     if fake_time is not None:
         os.environ['FAKETIME'] = "@{}".format(fake_time)
 
-    env_vars = copy.deepcopy(os.environ)
+    env_vars = os.environ
     if fake_time is not None:
         env_vars = add_faketime_to_env_vars(env_vars, fake_time)
 
-    launch_kwargs = {   'env':env_vars, 
-                        'stdout':subprocess.PIPE, 
-                        'stderr':subprocess.PIPE, }
-    if os.getenv("DEBUG"):
-        del launch_kwargs['stdout']
-        del launch_kwargs['stderr']
+    kwargs = {'env': env_vars}
+    context.dev_null = open(os.devnull, 'w')
+    if context.config.logging_level > LOG_DEBUG:
+        kwargs.update({'stdout':context.dev_null, 'stderr':context.dev_null})
 
-    context.app_process = subprocess.Popen([context.app_path, "--automation_server"], **launch_kwargs)
+    context.app_process = subprocess.Popen([context.app_path, "--automation_server"], **kwargs)
 
     pqaut.client.wait_for_automation_server()
 
@@ -84,7 +85,7 @@ def get_port():
     return port
 
 def rebuild_config_file(context):
-    config = {'general':{'poll_rate_seconds':str(context.poll_rate), 'rotation':'0', 'snow':'False'},  'ci_servers':{'sections':''}}
+    config = {'general':{'poll_rate_seconds':str(context.poll_rate), 'rotation':'0', 'holiday':str(context.holiday)},  'ci_servers':{'sections':''}}
     for index in range(len(context.fake_ci_servers)):
         world_ci_server = context.fake_ci_servers[index]
         config['ci_servers']['sections'] += '{},'.format(index)

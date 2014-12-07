@@ -16,7 +16,7 @@ import service.ci_server_poller as ci_poller
 
 class StatusScreen(qt.QQuickItem):
 
-    snow_changed = qt.pyqtSignal()
+    holiday_changed = qt.pyqtSignal()
     projects_changed = qt.pyqtSignal()
     failed_projects_changed = qt.pyqtSignal()
     error_changed = qt.pyqtSignal()
@@ -104,12 +104,12 @@ class StatusScreen(qt.QQuickItem):
 
         projects_model.sort_by_last_build_time()
 
-    @qt.pyqtProperty(bool, notify=snow_changed)
-    def snow(self):
+    @qt.pyqtProperty(bool, notify=holiday_changed)
+    def holiday(self):
         config_parser = config.SafeConfigParser(allow_no_value=False)
         with open('ci_screen.cfg') as config_file:
             config_parser.readfp(config_file)
-        snow = True
-        if config_parser.has_option('general', 'snow'):
-            snow = config_parser.getboolean('general', 'snow')
-        return snow
+        holiday = True
+        if config_parser.has_option('general', 'holiday'):
+            holiday = config_parser.getboolean('general', 'holiday')
+        return holiday
