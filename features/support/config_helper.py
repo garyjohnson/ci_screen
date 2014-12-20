@@ -1,7 +1,7 @@
 try:
-    import ConfigParser as config
+    from ConfigParser import SafeConfigParser
 except:
-    import configparser as config
+    from configparser import SafeConfigParser
 import os
 import shutil
 
