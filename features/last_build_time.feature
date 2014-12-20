@@ -59,7 +59,6 @@ Feature: Last Time Built
     Then I see failed projects "My Project"
     And I see "13 days ago"
 
-  @wip
   Scenario: Sort successful builds by last build time
     Given I have a CI server with projects:
       | name            | status    | last_build_time       |
