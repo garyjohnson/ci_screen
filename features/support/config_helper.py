@@ -1,6 +1,9 @@
+try:
+    import ConfigParser as config
+except:
+    import configparser as config
 import os
 import shutil
-from ConfigParser import SafeConfigParser
 
 
 config_path = None
