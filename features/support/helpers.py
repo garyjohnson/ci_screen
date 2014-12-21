@@ -28,7 +28,7 @@ def assert_is_above(above, below):
 
     above_y = 0
     below_y = 0
-    for retry in range(5):
+    for retry in range(10):
         above_element = pqaut.client.find_element(above, None)
         below_element = pqaut.client.find_element(below, None)
 

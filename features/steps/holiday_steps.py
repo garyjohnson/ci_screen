@@ -9,7 +9,7 @@ def i_have_holiday_effects_enabled(context):
 
 @then(u'I see snow')
 def i_see_snow(context):
-    pqaut.client.assert_is_visible('snow')
+    pqaut.client.assert_is_visible('snow', timeout=10)
 
 @then(u'I do not see snow')
 def i_do_not_see_snow(context):
