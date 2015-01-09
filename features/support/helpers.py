@@ -51,7 +51,8 @@ def get_linux_faketime_path():
 def add_faketime_to_env_vars(env_vars, fake_time):
     faketime_vars = { 'LD_PRELOAD': get_linux_faketime_path() }
     if sys.platform == 'darwin':
-        faketime_vars = {   'DYLD_INSERT_LIBRARIES': '/usr/local/lib/faketime/libfaketime.1.dylib:/System/Library/Frameworks/OpenGL.framework/Resources/GLEngine.bundle/GLEngine',
+        #faketime_vars = {   'DYLD_INSERT_LIBRARIES': '/usr/local/lib/faketime/libfaketime.1.dylib:/System/Library/Frameworks/OpenGL.framework/Resources/GLEngine.bundle/GLEngine',
+        faketime_vars = {   'DYLD_INSERT_LIBRARIES': '/usr/local/lib/faketime/libfaketime.1.dylib',
                             'DYLD_FORCE_FLAT_NAMESPACE': '1'}
     env_vars.update(faketime_vars)
     return env_vars
