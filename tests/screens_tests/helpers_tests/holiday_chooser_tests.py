@@ -25,6 +25,12 @@ class HolidayChooserTests(unittest.TestCase):
 
         self.assertEquals('widgets/Snow.qml', actual_path)
 
+    @freeze_time('2015-02-09')
+    def test_hearts_appear_five_days_before_valentines_day(self):
+        actual_path = holiday_chooser.get_holiday_widget_path()
+
+        self.assertEquals('widgets/Hearts.qml', actual_path)
+
     
         
         
