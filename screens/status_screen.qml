@@ -109,15 +109,7 @@ StatusScreen {
         id: holidayLoader
         anchors.fill: parent
         visible: root.holiday
-
-        Component.onCompleted: {
-            var now = new Date()
-            var year = now.getFullYear()
-            if(failedList.count == 0 && now >= new Date(year, 11-1, 15) && now <= new Date(year, 12-1, 26)) 
-                holidayLoader.source = "../widgets/Snow.qml"
-            else
-                holidayLoader.source = null
-        }
+        source: root.holidaySource
     }
 
     Component {

@@ -12,6 +12,7 @@ import pubsub.pub as pub
 import model.project
 import model.projects_model
 import service.ci_server_poller as ci_poller
+import screens.helpers.holiday_chooser as holiday_chooser
 
 
 class StatusScreen(qt.QQuickItem):
@@ -36,6 +37,9 @@ class StatusScreen(qt.QQuickItem):
         pub.subscribe(self.on_status_update, "CI_UPDATE")
         self.poller = ci_poller.CIServerPoller()
         self.poller.start_polling_async()
+
+    def update_holiday(self):
+        self.holidaySource = "../{}".format(holiday_chooser.get_holiday_widget_path())
 
     @qt.pyqtProperty(model.projects_model.ProjectsModel, notify=projects_changed)
     def projects(self):
@@ -82,6 +86,8 @@ class StatusScreen(qt.QQuickItem):
 
     @qt.pyqtSlot(dict, dict)
     def on_status_update_on_ui_thread(self, responses, errors):
+        self.update_holiday()
+
         bad_ci_servers = errors.keys()
         new_projects = [p for p in self.get_projects_from_responses(responses) if p.lastBuildStatus != 'Unknown']
 
@@ -123,5 +129,5 @@ class StatusScreen(qt.QQuickItem):
     @holidaySource.setter
     def holidaySource(self, value):
         self._holiday_source = value
-        self._holiday_source_changed.emit()
+        self.holiday_source_changed.emit()
 
