@@ -17,6 +17,7 @@ import service.ci_server_poller as ci_poller
 class StatusScreen(qt.QQuickItem):
 
     holiday_changed = qt.pyqtSignal()
+    holiday_source_changed = qt.pyqtSignal()
     projects_changed = qt.pyqtSignal()
     failed_projects_changed = qt.pyqtSignal()
     error_changed = qt.pyqtSignal()
@@ -27,6 +28,7 @@ class StatusScreen(qt.QQuickItem):
         self._projects = model.projects_model.ProjectsModel()
         self._failed_projects = model.projects_model.ProjectsModel()
         self._error = None
+        self._holiday_source = None
 
     def componentComplete(self):
         super(StatusScreen, self).componentComplete()
@@ -113,3 +115,13 @@ class StatusScreen(qt.QQuickItem):
         if config_parser.has_option('general', 'holiday'):
             holiday = config_parser.getboolean('general', 'holiday')
         return holiday
+
+    @qt.pyqtProperty(str, notify=holiday_source_changed)
+    def holidaySource(self):
+        return self._holiday_source
+
+    @holidaySource.setter
+    def holidaySource(self, value):
+        self._holiday_source = value
+        self._holiday_source_changed.emit()
+
