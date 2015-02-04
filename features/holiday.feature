@@ -36,13 +36,13 @@ Feature: Holiday
     And the app is running at "2014-12-25 01:01:01" UTC
     Then I see snow
 
-  Scenario: Hearts on week of valentine's day
+  Scenario: Hearts on week before valentine's day
     Given I have holiday effects enabled
     And I have a CI server with projects:
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2015-02-09 01:01:01" UTC
+    And the app is running at "2015-02-04 01:01:01" UTC
     Then I see hearts
 
   Scenario: Hearts on valentine's day
