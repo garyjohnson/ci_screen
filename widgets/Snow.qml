@@ -5,9 +5,6 @@ Item {
     id: root
 
     property string automation_id: 'snow'
-    property bool isSnowing
-    property date startDate: "2014-11-15"
-    property date endDate: "2014-12-25"
 
     ParticleSystem { id: particles }
 
@@ -29,7 +26,7 @@ Item {
         system: particles
         emitRate: 20
         lifeSpan: 7000
-        enabled: root.isSnowing
+        enabled: true
         velocity: PointDirection{ y:80; yVariation: 40; }
         acceleration: PointDirection{ y: 4 }
         size: 20
