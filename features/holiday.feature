@@ -15,7 +15,7 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2014-12-26 01:01:01" UTC
+    And the app is running at "2014-03-01 01:01:01" UTC
     Then I do not see snow
 
   Scenario: Snow at beginning of winter
