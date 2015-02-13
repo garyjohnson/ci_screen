@@ -42,7 +42,21 @@ class HolidayChooserTests(unittest.TestCase):
         actual_path = holiday_chooser.get_holiday_widget_path()
 
         self.assertNotEquals('widgets/Hearts.qml', actual_path)
-    
-        
-        
 
+    @freeze_time('2013-03-31')
+    def test_weird_stuff_does_not_appear_before_april_fools(self):
+        actual_path = holiday_chooser.get_holiday_widget_path()
+
+        self.assertNotEquals('widgets/Weird.qml', actual_path)
+
+    @freeze_time('2013-04-01')
+    def test_weird_stuff_appears_on_april_fools(self):
+        actual_path = holiday_chooser.get_holiday_widget_path()
+
+        self.assertEquals('widgets/Weird.qml', actual_path)
+
+    @freeze_time('2013-04-02')
+    def test_weird_stuff_does_not_appear_after_april_fools(self):
+        actual_path = holiday_chooser.get_holiday_widget_path()
+
+        self.assertNotEquals('widgets/Weird.qml', actual_path)

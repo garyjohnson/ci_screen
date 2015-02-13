@@ -23,3 +23,7 @@ def i_see_snow(context):
 @then(u'I do not see hearts')
 def i_do_not_see_snow(context):
     pqaut.client.assert_is_not_visible('hearts')
+
+@then(u'I see weird stuff')
+def i_see_weird_stuff(context):
+    pqaut.client.assert_is_visible('weird', timeout=10)

@@ -71,3 +71,13 @@ Feature: Holiday
       | My Other Project  | Success   |
     And the app is running at "2015-02-15 01:01:01" UTC
     Then I do not see hearts
+
+  Scenario: Weird stuff on april fools
+    Given I have holiday effects enabled
+    And I have a CI server with projects:
+      | name              | status    |
+      | My Project        | Success   |
+      | My Other Project  | Success   |
+    And the app is running at "2020-04-01 01:01:01" UTC
+    Then I see weird stuff
+
