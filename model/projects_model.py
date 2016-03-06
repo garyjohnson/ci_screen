@@ -57,11 +57,11 @@ class ProjectsModel(qt.QAbstractListModel):
 
     def roleNames(self):
         roles = {}
-        roles[self.NAME_ROLE] = "name"
-        roles[self.LAST_BUILD_STATUS_ROLE] = "lastBuildStatus"
-        roles[self.LAST_BUILD_LABEL_ROLE] = "lastBuildLabel"
-        roles[self.LAST_BUILD_TIME_ROLE] = "lastBuildTime"
-        roles[self.ACTIVITY_ROLE] = "activity"
+        roles[self.NAME_ROLE] = b"name"
+        roles[self.LAST_BUILD_STATUS_ROLE] = b"lastBuildStatus"
+        roles[self.LAST_BUILD_LABEL_ROLE] = b"lastBuildLabel"
+        roles[self.LAST_BUILD_TIME_ROLE] = b"lastBuildTime"
+        roles[self.ACTIVITY_ROLE] = b"activity"
         return roles
 
     def rowCount(self, parent=parent_index):
