@@ -8,6 +8,7 @@ import logging
 
 import pqaut.server as pqaut
 from PyQt5.Qt import QApplication, qmlRegisterType
+from freezegun import freeze_time
 
 import screens.status_screen as status_screen
 import main_window
@@ -22,6 +23,9 @@ if __name__ == '__main__':
 
     if '--automation_server' in sys.argv:
         pqaut.start_automation_server()
+
+    if 'FREEZETIME' in os.environ:
+        freeze_time(os.environ['FREEZETIME'], tz_offset=0).start()
 
     app = QApplication(sys.argv)
 

@@ -17,11 +17,6 @@ import features.support.config_helper as config_helper
 port = 6500
 LOG_DEBUG = 10
 
-def get_local_time_string(utc_time_string):
-    date_time = dateutil.parser.parse(utc_time_string).replace(tzinfo=pytz.utc)
-    local_date_time = date_time.astimezone(tzlocal.get_localzone())
-    return datetime.datetime.strftime(local_date_time, "%Y-%m-%d %H:%M:%S")
-
 def assert_is_above(above, below):
     pqaut.client.assert_is_visible(above)
     pqaut.client.assert_is_visible(below)
@@ -41,21 +36,6 @@ def assert_is_above(above, below):
 
     assert_true(above_y < below_y, u'Expected "{above}" (y:{above_y}) to be above "{below}" (y:{below_y})'.format(above=above, below=below, above_y=above_y, below_y=below_y))
 
-def get_linux_faketime_path():
-    paths = ['/usr/local/lib', '/usr/lib', '/usr/lib/arm-linux-gnueabihf', '/usr/lib/arm-linux-gnueabi']
-    for path in paths:
-        faketime_path = '{}/faketime/libfaketime.so.1'.format(path)
-        if os.path.exists(faketime_path):
-            return faketime_path
-
-def add_faketime_to_env_vars(env_vars, fake_time):
-    faketime_vars = { 'LD_PRELOAD': get_linux_faketime_path() }
-    if sys.platform == 'darwin':
-        faketime_vars = {   'DYLD_INSERT_LIBRARIES': '/usr/local/lib/faketime/libfaketime.1.dylib',
-                            'DYLD_FORCE_FLAT_NAMESPACE': '1'}
-    env_vars.update(faketime_vars)
-    return env_vars
-
 def kill_ci_screen(context):
     if context.app_process:
         subprocess.Popen.kill(context.app_process)
@@ -64,13 +44,10 @@ def kill_ci_screen(context):
 
 def launch_ci_screen(context, fake_time = None):
     if fake_time is not None:
-        os.environ['FAKETIME'] = "@{}".format(fake_time)
+        os.environ['FREEZETIME'] = fake_time
 
-    env_vars = os.environ
-    if fake_time is not None:
-        env_vars = add_faketime_to_env_vars(env_vars, fake_time)
-
-    kwargs = {'env': env_vars}
+    kwargs = {'env': os.environ }
+    print(kwargs)
     context.dev_null = open(os.devnull, 'w')
     if context.config.logging_level > LOG_DEBUG:
         kwargs.update({'stdout':context.dev_null, 'stderr':context.dev_null})

@@ -6,7 +6,7 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2014-11-14 01:01:01" UTC
+    And the app is running at "2014-11-14 01:01:01"
     Then I do not see snow
 
   Scenario: No snow after winter
@@ -15,7 +15,7 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2014-03-01 01:01:01" UTC
+    And the app is running at "2014-03-01 01:01:01"
     Then I do not see snow
 
   Scenario: Snow at beginning of winter
@@ -24,7 +24,7 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2014-12-01 01:01:01" UTC
+    And the app is running at "2014-12-01 01:01:01"
     Then I see snow
 
   Scenario: Snow at end of winter
@@ -33,7 +33,7 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2014-12-25 01:01:01" UTC
+    And the app is running at "2014-12-25 01:01:01"
     Then I see snow
 
   Scenario: Hearts on week before valentine's day
@@ -42,7 +42,7 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2015-02-04 01:01:01" UTC
+    And the app is running at "2015-02-04 01:01:01"
     Then I see hearts
 
   Scenario: Hearts on valentine's day
@@ -51,7 +51,7 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2015-02-14 01:01:01" UTC
+    And the app is running at "2015-02-14 01:01:01"
     Then I see hearts
 
   Scenario: No hearts before week of valentine's day
@@ -60,7 +60,7 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2015-02-08 01:01:01" UTC
+    And the app is running at "2015-02-08 01:01:01"
     Then I do not see hearts
 
   Scenario: No hearts after valentine's day
@@ -69,7 +69,7 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2015-02-15 01:01:01" UTC
+    And the app is running at "2015-02-15 01:01:01"
     Then I do not see hearts
 
   Scenario: Weird stuff on april fools
@@ -78,6 +78,6 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2020-04-01 01:01:01" UTC
+    And the app is running at "2020-04-01 01:01:01"
     Then I see weird stuff
 
