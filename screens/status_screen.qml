@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
+import QtGraphicalEffects 1.0
 import Screens 1.0
 import '../widgets'
 
@@ -24,29 +25,44 @@ StatusScreen {
 
         Item {
             z: 1
+            id: header
 
             Layout.preferredHeight: headerImage.height + 20
             Layout.fillWidth: true
 
             Rectangle {
                 anchors.fill: parent
-                color: '#CCCCCC'
+                color: '#51a0d5'
             }
 
             Image { 
                 id: headerImage
-                anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
-                anchors.leftMargin: 20
-                source: '../assets/leandog.png'
+                anchors.leftMargin: 40
+                anchors.top: parent.top
+                anchors.topMargin: 18
+                source: '../assets/leandog_white.png'
                 fillMode: Image.PreserveAspectFit
                 height: 100
                 smooth: true
             }
         }
 
-        Item {
+        DropShadow {
             z: 2
+            anchors.fill: header
+            horizontalOffset: 0
+            verticalOffset: 10
+            radius: 0
+            fast: true
+            samples: 16
+            spread: 0.0
+            color: "#80000000"
+            source: header
+        }
+
+        Item {
+            z: 3
 
             Layout.preferredHeight: (root.itemHeight + root.itemSpacing) * failedList.count
             Layout.fillWidth: true
