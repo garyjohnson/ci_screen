@@ -7,7 +7,7 @@ import collections
 
 import PyQt5.Qt as qt
 import xmltodict
-import pubsub.pub as pub
+from pydispatch import dispatcher
 
 import model.project
 import model.projects_model
@@ -34,7 +34,7 @@ class StatusScreen(qt.QQuickItem):
     def componentComplete(self):
         super(StatusScreen, self).componentComplete()
         self.on_status_updated.connect(self.on_status_update_on_ui_thread)
-        pub.subscribe(self.on_status_update, "CI_UPDATE")
+        dispatcher.connect(self._on_status_update, "CI_UPDATE", sender=dispatcher.Any)
         self.poller = ci_poller.CIServerPoller()
         self.poller.start_polling_async()
 

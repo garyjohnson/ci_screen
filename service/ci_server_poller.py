@@ -6,7 +6,7 @@ try:
 except:
     import configparser as config
 
-import pubsub.pub as pub
+from pydispatch import dispatcher
 import requests
 
 import service.ci_server_loader as ci_loader
@@ -61,7 +61,7 @@ class CIServerPoller(object):
                     logger.warning(ex)
                     errors[name] = ex
 
-            pub.sendMessage("CI_UPDATE", responses=responses, errors=errors)
+            dispatcher.send(signal="CI_UPDATE", sender=self, responses=responses, errors=errors)
             time.sleep(self._poll_rate)
 
     def get_poll_rate(self):
