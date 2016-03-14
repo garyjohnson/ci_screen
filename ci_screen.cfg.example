@@ -1,0 +1,16 @@
+[general]
+poll_rate_seconds=10
+rotation=0
+holiday=true
+
+[ci_servers]
+sections=server1,server2
+
+[server1]
+url=http://ci.server1.com
+
+[server2]
+url=http://ci.server2.net
+#Specified when http basic auth needed to access cc.xml
+username=myusername
+token=1042081038133300184013931000109138
