@@ -1,4 +1,5 @@
-reports*/
+report*/
+report*.*
 .DS_Store
 .venv
 .venv3

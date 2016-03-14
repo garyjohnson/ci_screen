@@ -9,10 +9,10 @@ import PyQt5.Qt as qt
 import xmltodict
 from pydispatch import dispatcher
 
-import ci_screen.model.project
-import ci_screen.model.projects_model
-import ci_screen.service.ci_server_poller as ci_poller
 import ci_screen.screens.helpers.holiday_chooser as holiday_chooser
+from ci_screen.model.project import Project
+from ci_screen.model.projects_model import ProjectsModel
+from ci_screen.service.ci_server_poller import CIServerPoller
 
 
 class StatusScreen(qt.QQuickItem):
@@ -26,8 +26,8 @@ class StatusScreen(qt.QQuickItem):
 
     def __init__(self, *args, **kwargs):
         super(StatusScreen, self).__init__(*args, **kwargs)
-        self._projects = ci_screen.model.projects_model.ProjectsModel()
-        self._failed_projects = ci_screen.model.projects_model.ProjectsModel()
+        self._projects = ProjectsModel()
+        self._failed_projects = ProjectsModel()
         self._error = None
         self._holiday_source = None
 
@@ -35,13 +35,13 @@ class StatusScreen(qt.QQuickItem):
         super(StatusScreen, self).componentComplete()
         self.on_status_updated.connect(self.on_status_update_on_ui_thread)
         dispatcher.connect(self.on_status_update, "CI_UPDATE", sender=dispatcher.Any)
-        self.poller = ci_poller.CIServerPoller()
+        self.poller = CIServerPoller()
         self.poller.start_polling_async()
 
     def update_holiday(self):
         self.holidaySource = "../{}".format(holiday_chooser.get_holiday_widget_path())
 
-    @qt.pyqtProperty(ci_screen.model.projects_model.ProjectsModel, notify=projects_changed)
+    @qt.pyqtProperty(ProjectsModel, notify=projects_changed)
     def projects(self):
         return self._projects
 
@@ -50,7 +50,7 @@ class StatusScreen(qt.QQuickItem):
         self._projects = value
         self.projects_changed.emit()
 
-    @qt.pyqtProperty(ci_screen.model.projects_model.ProjectsModel, notify=failed_projects_changed)
+    @qt.pyqtProperty(ProjectsModel, notify=failed_projects_changed)
     def failed_projects(self):
         return self._failed_projects
 
@@ -80,7 +80,7 @@ class StatusScreen(qt.QQuickItem):
                     last_build_status = response_project.get('@lastBuildStatus')
                     last_build_time = response_project.get('@lastBuildTime')
 
-                    project = ci_screen.model.project.Project(name, activity, last_build_status, last_build_time, ci_server)
+                    project = Project(name, activity, last_build_status, last_build_time, ci_server)
                     projects.append(project)
         return projects
 

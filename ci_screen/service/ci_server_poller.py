@@ -9,7 +9,7 @@ except:
 from pydispatch import dispatcher
 import requests
 
-import ci_screen.service.ci_server_loader as ci_loader
+import ci_screen.service.ci_server_loader as ci_server_loader
 
 
 logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ class CIServerPoller(object):
         self._update = threading.Event()
         self._poll_rate = self.get_poll_rate()
         self.polling_thread = None
-        self.ci_servers = ci_loader.get_ci_servers()
+        self.ci_servers = ci_server_loader.get_ci_servers()
 
     def __del__(self):
         self.stop_polling()

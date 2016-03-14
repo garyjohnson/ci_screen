@@ -1,7 +1,8 @@
-import pytz
 import datetime
-import PyQt5.Qt as qt
+
 import dateutil.parser as date_parser
+import pytz
+import PyQt5.Qt as qt
 
 
 class Project(qt.QObject):

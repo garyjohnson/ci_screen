@@ -10,8 +10,8 @@ from PyQt5.Qt import QApplication, qmlRegisterType
 from freezegun import freeze_time
 
 import ci_screen.screens.status_screen as status_screen
-import ci_screen.main_window
-import ci_screen.model
+import ci_screen.main_window as main_window
+import ci_screen.model as model
 
 
 def exit_on_ctrl_c():
@@ -29,11 +29,11 @@ if __name__ == '__main__':
 
     app = QApplication(sys.argv)
 
-    qmlRegisterType(ci_screen.screens.status_screen.StatusScreen, 'Screens', 1, 0, 'StatusScreen')
-    qmlRegisterType(ci_screen.model.project.Project, 'Model', 1, 0, 'Project')
-    qmlRegisterType(ci_screen.model.projects_model.ProjectsModel, 'Model', 1, 0, 'ProjectsModel')
+    qmlRegisterType(status_screen.StatusScreen, 'Screens', 1, 0, 'StatusScreen')
+    qmlRegisterType(model.project.Project, 'Model', 1, 0, 'Project')
+    qmlRegisterType(model.projects_model.ProjectsModel, 'Model', 1, 0, 'ProjectsModel')
 
-    window = ci_screen.main_window.MainWindow()
+    window = main_window.MainWindow()
     window.showFullScreen()
 
     sys.exit(app.exec_())
