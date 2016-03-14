@@ -2,7 +2,7 @@ import unittest
 
 from freezegun import freeze_time
 
-import screens.helpers.holiday_chooser as holiday_chooser
+import ci_screen.screens.helpers.holiday_chooser as holiday_chooser
 
 
 class HolidayChooserTests(unittest.TestCase):

@@ -1,0 +1,49 @@
+<testsuite errors="0" failures="0" name="error_handling.Error Handling" skipped="0" tests="2" time="5.187632"><testcase classname="error_handling.Error Handling" name="Show projects from non-failing CI server" status="passed" time="0.863489"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show projects from non-failing CI server
+    Given I have a CI server with projects ... passed in 0.002s
+      | name       |
+      | My Project |
+    And I have a CI server with projects ... passed in 0.004s
+      | name             |
+      | My Other Project |
+    And CI server 2 is failing ... passed in 0.001s
+    And the app is running ... passed in 0.518s
+    Then I see projects "My Project" ... passed in 0.330s
+    And I do not see projects "My Other Project" ... passed in 0.009s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8'})}
+
+]]>
+</system-out></testcase><testcase classname="error_handling.Error Handling" name="Do not remove projects from failing CI server" status="passed" time="4.324143"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Do not remove projects from failing CI server
+    Given I have a CI server with projects ... passed in 0.002s
+      | name       |
+      | My Project |
+    And I have a CI server with projects ... passed in 0.002s
+      | name             |
+      | My Other Project |
+    And my poll rate is 1 seconds ... passed in 0.004s
+    And the app is running ... passed in 1.027s
+    And I see projects "My Project" ... passed in 1.262s
+    And I see projects "My Other Project" ... passed in 0.006s
+    When CI server 2 is failing ... passed in 0.000s
+    And I wait 2 seconds ... passed in 2.005s
+    Then I see projects "My Project" ... passed in 0.009s
+    And I see projects "My Other Project" ... passed in 0.006s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8'})}
+
+]]>
+</system-out></testcase></testsuite>

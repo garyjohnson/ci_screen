@@ -1,0 +1,172 @@
+<testsuite errors="0" failures="0" name="holiday.Holiday" skipped="0" tests="9" time="6.761564"><testcase classname="holiday.Holiday" name="No snow before winter" status="passed" time="0.514247"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: No snow before winter
+    Given I have holiday effects enabled ... passed in 0.001s
+    And I have a CI server with projects ... passed in 0.001s
+      | name             | status  |
+      | My Project       | Success |
+      | My Other Project | Success |
+    And the app is running at "2014-11-14 01:01:01" ... passed in 0.509s
+    Then I do not see snow ... passed in 0.004s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-11-14 01:01:01'})}
+
+]]>
+</system-out></testcase><testcase classname="holiday.Holiday" name="No snow after winter" status="passed" time="0.528708"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: No snow after winter
+    Given I have holiday effects enabled ... passed in 0.002s
+    And I have a CI server with projects ... passed in 0.014s
+      | name             | status  |
+      | My Project       | Success |
+      | My Other Project | Success |
+    And the app is running at "2014-03-01 01:01:01" ... passed in 0.510s
+    Then I do not see snow ... passed in 0.004s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-03-01 01:01:01'})}
+
+]]>
+</system-out></testcase><testcase classname="holiday.Holiday" name="Snow at beginning of winter" status="passed" time="0.836072"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Snow at beginning of winter
+    Given I have holiday effects enabled ... passed in 0.007s
+    And I have a CI server with projects ... passed in 0.008s
+      | name             | status  |
+      | My Project       | Success |
+      | My Other Project | Success |
+    And the app is running at "2014-12-01 01:01:01" ... passed in 0.512s
+    Then I see snow ... passed in 0.310s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-12-01 01:01:01'})}
+
+]]>
+</system-out></testcase><testcase classname="holiday.Holiday" name="Snow at end of winter" status="passed" time="1.132436"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Snow at end of winter
+    Given I have holiday effects enabled ... passed in 0.001s
+    And I have a CI server with projects ... passed in 0.001s
+      | name             | status  |
+      | My Project       | Success |
+      | My Other Project | Success |
+    And the app is running at "2014-12-25 01:01:01" ... passed in 0.508s
+    Then I see snow ... passed in 0.622s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-12-25 01:01:01'})}
+
+]]>
+</system-out></testcase><testcase classname="holiday.Holiday" name="Hearts on week before valentine's day" status="passed" time="0.830471"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Hearts on week before valentine's day
+    Given I have holiday effects enabled ... passed in 0.001s
+    And I have a CI server with projects ... passed in 0.001s
+      | name             | status  |
+      | My Project       | Success |
+      | My Other Project | Success |
+    And the app is running at "2015-02-09 01:01:01" ... passed in 0.510s
+    Then I see hearts ... passed in 0.318s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2015-02-09 01:01:01'})}
+
+]]>
+</system-out></testcase><testcase classname="holiday.Holiday" name="Hearts on valentine's day" status="passed" time="1.03424"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Hearts on valentine's day
+    Given I have holiday effects enabled ... passed in 0.001s
+    And I have a CI server with projects ... passed in 0.002s
+      | name             | status  |
+      | My Project       | Success |
+      | My Other Project | Success |
+    And the app is running at "2015-02-14 01:01:01" ... passed in 1.024s
+    Then I see hearts ... passed in 0.007s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2015-02-14 01:01:01'})}
+
+]]>
+</system-out></testcase><testcase classname="holiday.Holiday" name="No hearts before week of valentine's day" status="passed" time="0.516985"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: No hearts before week of valentine's day
+    Given I have holiday effects enabled ... passed in 0.001s
+    And I have a CI server with projects ... passed in 0.001s
+      | name             | status  |
+      | My Project       | Success |
+      | My Other Project | Success |
+    And the app is running at "2015-02-08 01:01:01" ... passed in 0.511s
+    Then I do not see hearts ... passed in 0.004s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2015-02-08 01:01:01'})}
+
+]]>
+</system-out></testcase><testcase classname="holiday.Holiday" name="No hearts after valentine's day" status="passed" time="0.52542"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: No hearts after valentine's day
+    Given I have holiday effects enabled ... passed in 0.001s
+    And I have a CI server with projects ... passed in 0.007s
+      | name             | status  |
+      | My Project       | Success |
+      | My Other Project | Success |
+    And the app is running at "2015-02-15 01:01:01" ... passed in 0.514s
+    Then I do not see hearts ... passed in 0.004s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2015-02-15 01:01:01'})}
+
+]]>
+</system-out></testcase><testcase classname="holiday.Holiday" name="Weird stuff on april fools" status="passed" time="0.842985"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Weird stuff on april fools
+    Given I have holiday effects enabled ... passed in 0.006s
+    And I have a CI server with projects ... passed in 0.010s
+      | name             | status  |
+      | My Project       | Success |
+      | My Other Project | Success |
+    And the app is running at "2020-04-01 01:01:01" ... passed in 0.513s
+    Then I see weird stuff ... passed in 0.315s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2020-04-01 01:01:01'})}
+
+]]>
+</system-out></testcase></testsuite>

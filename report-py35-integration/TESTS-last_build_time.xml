@@ -1,0 +1,150 @@
+<testsuite errors="0" failures="0" name="last_build_time.Last Time Built" skipped="0" tests="8" time="11.647307"><testcase classname="last_build_time.Last Time Built" name="Show failure time for build that just failed" status="passed" time="1.344317"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show failure time for build that just failed
+    Given I have a CI server with projects ... passed in 0.003s
+      | name       | status  | last_build_time      |
+      | My Project | Failure | 2014-08-01T11:01:15Z |
+    And the app is running at "2014-08-01 11:01:15" ... passed in 1.020s
+    Then I see failed projects "My Project" ... passed in 0.315s
+    And I see "Just Now" ... passed in 0.007s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-01 11:01:15'})}
+
+]]>
+</system-out></testcase><testcase classname="last_build_time.Last Time Built" name="Show failure time for build a minute ago" status="passed" time="1.450976"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show failure time for build a minute ago
+    Given I have a CI server with projects ... passed in 0.001s
+      | name       | status  | last_build_time      |
+      | My Project | Failure | 2014-08-01T11:01:15Z |
+    And the app is running at "2014-08-01 11:02:15" ... passed in 0.511s
+    Then I see failed projects "My Project" ... passed in 0.932s
+    And I see "1 minute ago" ... passed in 0.007s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-01 11:02:15'})}
+
+]]>
+</system-out></testcase><testcase classname="last_build_time.Last Time Built" name="Show failure time for build multiple minutes ago" status="passed" time="1.145911"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show failure time for build multiple minutes ago
+    Given I have a CI server with projects ... passed in 0.002s
+      | name       | status  | last_build_time      |
+      | My Project | Failure | 2014-08-01T11:01:15Z |
+    And the app is running at "2014-08-01 11:04:15" ... passed in 0.510s
+    Then I see failed projects "My Project" ... passed in 0.625s
+    And I see "3 minutes ago" ... passed in 0.009s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-01 11:04:15'})}
+
+]]>
+</system-out></testcase><testcase classname="last_build_time.Last Time Built" name="Show failure time for build an hour ago" status="passed" time="1.342541"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show failure time for build an hour ago
+    Given I have a CI server with projects ... passed in 0.002s
+      | name       | status  | last_build_time      |
+      | My Project | Failure | 2014-08-01T11:01:15Z |
+    And the app is running at "2014-08-01 12:15:15" ... passed in 1.019s
+    Then I see failed projects "My Project" ... passed in 0.316s
+    And I see "1 hour ago" ... passed in 0.007s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-01 12:15:15'})}
+
+]]>
+</system-out></testcase><testcase classname="last_build_time.Last Time Built" name="Show failure time for build multiple hours ago" status="passed" time="1.452735"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show failure time for build multiple hours ago
+    Given I have a CI server with projects ... passed in 0.001s
+      | name       | status  | last_build_time      |
+      | My Project | Failure | 2014-08-01T11:01:15Z |
+    And the app is running at "2014-08-01 14:15:15" ... passed in 0.511s
+    Then I see failed projects "My Project" ... passed in 0.933s
+    And I see "3 hours ago" ... passed in 0.007s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-01 14:15:15'})}
+
+]]>
+</system-out></testcase><testcase classname="last_build_time.Last Time Built" name="Show failure time for build a day ago" status="passed" time="1.345873"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show failure time for build a day ago
+    Given I have a CI server with projects ... passed in 0.001s
+      | name       | status  | last_build_time      |
+      | My Project | Failure | 2014-08-01T11:01:15Z |
+    And the app is running at "2014-08-02 12:15:15" ... passed in 1.023s
+    Then I see failed projects "My Project" ... passed in 0.315s
+    And I see "1 day ago" ... passed in 0.007s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-02 12:15:15'})}
+
+]]>
+</system-out></testcase><testcase classname="last_build_time.Last Time Built" name="Show failure time for build multiple days ago" status="passed" time="1.445774"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show failure time for build multiple days ago
+    Given I have a CI server with projects ... passed in 0.001s
+      | name       | status  | last_build_time      |
+      | My Project | Failure | 2014-08-02T11:01:15Z |
+    And the app is running at "2014-08-15 12:15:15" ... passed in 0.508s
+    Then I see failed projects "My Project" ... passed in 0.929s
+    And I see "13 days ago" ... passed in 0.007s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-15 12:15:15'})}
+
+]]>
+</system-out></testcase><testcase classname="last_build_time.Last Time Built" name="Sort successful builds by last build time" status="passed" time="2.11918"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Sort successful builds by last build time
+    Given I have a CI server with projects ... passed in 0.001s
+      | name         | status  | last_build_time      |
+      | My Project 1 | Success | 2013-08-02T11:01:15Z |
+      | My Project 2 | Success | 2014-08-02T11:01:15Z |
+    And I have a CI server with projects ... passed in 0.001s
+      | name         | status  | last_build_time      |
+      | My Project 3 | Success | 2014-01-01T11:01:15Z |
+    And my poll rate is 1 seconds ... passed in 0.001s
+    And the app is running at "2014-08-15 12:15:15" ... passed in 0.511s
+    Then "My Project 2" is above "My Project 3" ... passed in 1.581s
+    And "My Project 3" is above "My Project 1" ... passed in 0.024s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-15 12:15:15'})}
+
+]]>
+</system-out></testcase></testsuite>

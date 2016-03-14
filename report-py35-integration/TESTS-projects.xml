@@ -1,0 +1,80 @@
+<testsuite errors="0" failures="0" name="projects.Projects" skipped="0" tests="4" time="6.895555"><testcase classname="projects.Projects" name="Show Projects" status="passed" time="1.659531"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show Projects
+    Given I have a CI server with projects ... passed in 0.002s
+      | name             |
+      | My Project       |
+      | My Other Project |
+    And the app is running ... passed in 1.022s
+    Then I see projects "My Project, My Other Project" ... passed in 0.636s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-15 12:15:15'})}
+
+]]>
+</system-out></testcase><testcase classname="projects.Projects" name="Show Project Status" status="passed" time="1.463422"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show Project Status
+    Given I have a CI server with projects ... passed in 0.002s
+      | name             | status  |
+      | My Project       | Success |
+      | My Other Project | Failure |
+    And the app is running ... passed in 0.511s
+    Then I see successful projects "My Project" ... passed in 0.932s
+    And I see failed projects "My Other Project" ... passed in 0.006s
+    And I do not see failed projects "My Project" ... passed in 0.007s
+    And I do not see successful projects "My Other Project" ... passed in 0.006s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-15 12:15:15'})}
+
+]]>
+</system-out></testcase><testcase classname="projects.Projects" name="Order errors first" status="passed" time="1.478911"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Order errors first
+    Given I have a CI server with projects ... passed in 0.001s
+      | name                   | status  |
+      | My Project             | Success |
+      | My Other Project       | Failure |
+      | My Other Other Project | Failure |
+    And the app is running ... passed in 0.508s
+    Then "My Other Project" is above "My Project" ... passed in 0.946s
+    And "My Other Other Project" is above "My Project" ... passed in 0.023s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-15 12:15:15'})}
+
+]]>
+</system-out></testcase><testcase classname="projects.Projects" name="Show Projects from Multiple CI Servers" status="passed" time="2.293691"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Show Projects from Multiple CI Servers
+    Given I have a CI server with projects ... passed in 0.001s
+      | name       |
+      | My Project |
+    And I have a CI server with projects ... passed in 0.001s
+      | name             |
+      | My Other Project |
+    And the app is running ... passed in 1.026s
+    Then I see projects "My Project, My Other Project" ... passed in 1.265s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+{'env': environ({'PATH': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin', 'VIRTUAL_ENV': '/Users/garyjohnson/repositories/ci_screen/.tox/py35-integration', 'TMPDIR': '/var/folders/zm/1qvf2jhs36b2tljvgh6pn7dh0000gn/T/', 'PYTHONHASHSEED': '2904758645', '__CF_USER_TEXT_ENCODING': '0x1F5:0x0:0x0', 'LANG': 'en_US.UTF-8', 'FREEZETIME': '2014-08-15 12:15:15'})}
+
+]]>
+</system-out></testcase></testsuite>
