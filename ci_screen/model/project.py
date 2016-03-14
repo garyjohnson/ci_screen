@@ -3,6 +3,7 @@ import datetime
 import PyQt5.Qt as qt
 import dateutil.parser as date_parser
 
+
 class Project(qt.QObject):
 
     name_changed=qt.pyqtSignal()

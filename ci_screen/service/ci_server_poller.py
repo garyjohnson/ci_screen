@@ -9,7 +9,7 @@ except:
 from pydispatch import dispatcher
 import requests
 
-import service.ci_server_loader as ci_loader
+import ci_screen.service.ci_server_loader as ci_loader
 
 
 logger = logging.getLogger(__name__)

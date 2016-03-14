@@ -42,7 +42,7 @@ Feature: Holiday
       | name              | status    |
       | My Project        | Success   |
       | My Other Project  | Success   |
-    And the app is running at "2015-02-04 01:01:01"
+    And the app is running at "2015-02-09 01:01:01"
     Then I see hearts
 
   Scenario: Hearts on valentine's day

@@ -5,7 +5,7 @@ import features.support.helpers as helpers
 import features.support.fake_ci_server as ci
 import features.support.config_helper as config_helper
 
-@given(u'I have a CI server with projects$')
+@given(u'I have a CI server with projects')
 def i_have_a_ci_server_with_projects(context):
     port = helpers.get_port()
     ci_server = ci.FakeCIServer(port=port)
@@ -16,14 +16,14 @@ def i_have_a_ci_server_with_projects(context):
 
     helpers.rebuild_config_file(context)
 
-@given(u'the app is running$')
+@given(u'the app is running')
 def the_app_is_running(context):
     helpers.launch_ci_screen(context)
 
-@given(u'the app is running at "(?P<time>[^"]*)"$')
+@given(u'the app is running at "(?P<time>[^"]*)"')
 def the_app_is_running_at(context, time):
     helpers.launch_ci_screen(context, time)
 
-@then(u'I see "(?P<text>[^"]*)"$')
+@then(u'I see "(?P<text>[^"]*)"')
 def i_see(context, text):
     pqaut.assert_is_visible(text, timeout=10)
