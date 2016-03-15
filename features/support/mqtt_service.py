@@ -30,6 +30,10 @@ class MqttService(object):
     def _start_mosquitto(self):
         print("Starting mosquitto")
         self._mosquitto_process = subprocess.Popen(['mosquitto', '-p', '52129'])
+        self._wait_for_mosquitto_to_start()
+
+    def _wait_for_mosquitto_to_start(self):
+        # Yes this should actually do what it says.
         time.sleep(3)
 
     def _connect_to_mosquitto(self):
