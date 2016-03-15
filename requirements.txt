@@ -11,3 +11,4 @@ datetime
 python-dateutil
 freezegun
 tox
+paho-mqtt

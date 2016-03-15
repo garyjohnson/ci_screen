@@ -62,7 +62,22 @@ def get_port():
     return port
 
 def rebuild_config_file(context):
-    config = {'general':{'poll_rate_seconds':str(context.poll_rate), 'rotation':'0', 'holiday':str(context.holiday)},  'ci_servers':{'sections':''}}
+    config = {
+                'general': {
+                    'poll_rate_seconds':str(context.poll_rate), 
+                    'rotation':'0', 
+                    'holiday':str(context.holiday)
+                },  
+
+                'ci_servers': {
+                    'sections':''
+                },
+
+                'mqtt': {
+                    'enabled':str(context.mqtt_enabled)
+                }
+             }
+
     for index in range(len(context.fake_ci_servers)):
         world_ci_server = context.fake_ci_servers[index]
         config['ci_servers']['sections'] += '{},'.format(index)
