@@ -47,7 +47,6 @@ def launch_ci_screen(context, fake_time = None):
         os.environ['FREEZETIME'] = fake_time
 
     kwargs = {'env': os.environ }
-    print(kwargs)
     context.dev_null = open(os.devnull, 'w')
     if context.config.logging_level > LOG_DEBUG:
         kwargs.update({'stdout':context.dev_null, 'stderr':context.dev_null})
@@ -66,7 +65,8 @@ def rebuild_config_file(context):
                 'general': {
                     'poll_rate_seconds':str(context.poll_rate), 
                     'rotation':'0', 
-                    'holiday':str(context.holiday)
+                    'holiday':str(context.holiday),
+                    'mqtt':str(context.mqtt_enabled)
                 },  
 
                 'ci_servers': {
@@ -74,7 +74,9 @@ def rebuild_config_file(context):
                 },
 
                 'mqtt': {
-                    'enabled':str(context.mqtt_enabled)
+                    'host':'0.0.0.0',
+                    'port':'52129',
+                    'now_playing_topic':str(context.mqtt_now_playing_topic)
                 }
              }
 

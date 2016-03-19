@@ -46,6 +46,14 @@ StatusScreen {
                 height: 100
                 smooth: true
             }
+
+            NowPlaying {
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                anchors.verticalCenter: parent.verticalCenter
+                implicitHeight: 100
+                implicitWidth: 500
+            }
         }
 
         DropShadow {

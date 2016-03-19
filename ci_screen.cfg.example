@@ -2,6 +2,7 @@
 poll_rate_seconds=10
 rotation=0
 holiday=true
+mqtt=true
 
 [ci_servers]
 sections=server1,server2
@@ -14,3 +15,10 @@ url=http://ci.server2.net
 #Specified when http basic auth needed to access cc.xml
 username=myusername
 token=1042081038133300184013931000109138
+
+[mqtt]
+host=0.0.0.0
+port=52129
+username=
+password=
+now_playing_topic=
