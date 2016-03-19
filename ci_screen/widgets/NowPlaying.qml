@@ -24,6 +24,7 @@ NowPlaying {
                 property string automation_id: root.song
                 property string automation_type: 'song'
                 Layout.fillWidth: true
+                Layout.topMargin: 8
                 color: 'white'
                 font.family: 'Open Sans'
                 font.weight: Font.Black
@@ -38,6 +39,8 @@ NowPlaying {
                 property string automation_id: root.artist
                 property string automation_type: 'artist'
                 Layout.fillWidth: true
+                Layout.topMargin: -8
+                Layout.bottomMargin: 8
                 color: 'white'
                 font.family: 'Open Sans'
                 font.weight: Font.Light
