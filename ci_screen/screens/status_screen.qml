@@ -52,7 +52,7 @@ StatusScreen {
                 anchors.rightMargin: 20
                 anchors.verticalCenter: parent.verticalCenter
                 implicitHeight: 100
-                implicitWidth: 500
+                implicitWidth: parent.width - headerImage.width - 100
             }
         }
 
