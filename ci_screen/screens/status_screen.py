@@ -3,10 +3,8 @@ try:
 except:
     import configparser as config
 import json
-import collections
 
 import PyQt5.Qt as qt
-import xmltodict
 from pydispatch import dispatcher
 
 import ci_screen.screens.helpers.holiday_chooser as holiday_chooser
@@ -68,20 +66,18 @@ class StatusScreen(qt.QQuickItem):
         self._error
         self.error_changed.emit()
 
-    def get_projects_from_responses(self, responses):
+    def _get_projects_from_responses(self, responses):
         projects = []
         for ci_server in responses:
-            response = responses[ci_server]
-            statuses = xmltodict.parse(response.text, dict_constructor=lambda *args, **kwargs: collections.defaultdict(list, *args, **kwargs))
-            for response_projects in statuses['Projects']:
-                for response_project in response_projects['Project']:
-                    name = response_project.get('@name')
-                    activity = response_project.get('@activity')
-                    last_build_status = response_project.get('@lastBuildStatus')
-                    last_build_time = response_project.get('@lastBuildTime')
+            jobs = responses[ci_server]
+            for job in jobs:
+                name = job['name']
+                activity = job['activity']
+                last_build_status = job['last_build_status']
+                last_build_time = job['last_build_time']
 
-                    project = Project(name, activity, last_build_status, last_build_time, ci_server)
-                    projects.append(project)
+                project = Project(name, activity, last_build_status, last_build_time, ci_server)
+                projects.append(project)
         return projects
 
     @qt.pyqtSlot(dict, dict)
@@ -89,7 +85,7 @@ class StatusScreen(qt.QQuickItem):
         self.update_holiday()
 
         bad_ci_servers = errors.keys()
-        new_projects = [p for p in self.get_projects_from_responses(responses) if p.lastBuildStatus != 'Unknown']
+        new_projects = [p for p in self._get_projects_from_responses(responses) if p.lastBuildStatus != 'Unknown']
 
         self._synchronize_projects(self.projects, [p for p in new_projects if not p.is_failed()], bad_ci_servers)
         self._synchronize_projects(self.failed_projects, [p for p in new_projects if p.is_failed()], bad_ci_servers)
