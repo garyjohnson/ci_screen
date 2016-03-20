@@ -50,8 +50,9 @@ StatusScreen {
             NowPlaying {
                 anchors.right: parent.right
                 anchors.rightMargin: 20
-                anchors.verticalCenter: parent.verticalCenter
-                implicitHeight: 100
+                anchors.top: parent.top
+                anchors.topMargin: 18
+                implicitHeight: 90
                 implicitWidth: parent.width - headerImage.width - 100
             }
         }

@@ -24,11 +24,10 @@ NowPlaying {
                 property string automation_id: root.song
                 property string automation_type: 'song'
                 Layout.fillWidth: true
-                Layout.topMargin: 8
                 color: 'white'
                 font.family: 'Open Sans'
                 font.weight: Font.Black
-                font.pointSize: 35
+                font.pointSize: 30
                 text: root.song
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignRight
@@ -44,7 +43,7 @@ NowPlaying {
                 color: 'white'
                 font.family: 'Open Sans'
                 font.weight: Font.Light
-                font.pointSize: 25
+                font.pointSize: 20
                 text: root.artist
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignRight
