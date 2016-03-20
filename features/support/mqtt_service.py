@@ -15,10 +15,17 @@ class MqttService(object):
         self._mosquitto_process = None
         self._client = None
         self._client_connected_count = 0
+        self._messages = {}
 
     @property
     def client_connected_count(self):
         return self._client_connected_count
+
+    def get_message(self, topic):
+        if topic in self._messages:
+            return self._messages[topic]
+
+        return ''
 
     def start(self):
         self._start_mosquitto()
@@ -33,6 +40,10 @@ class MqttService(object):
 
     def publish(self, topic, message, retain=False):
         self._client.publish(topic, message, retain=retain)
+
+    def subscribe(self, topic):
+        self._messages[topic] = ''
+        self._client.subscribe(topic)
 
     def _start_mosquitto(self):
         subprocess.call('pkill -f "{}"'.format(BROKER_CMD), shell=True)
@@ -54,6 +65,9 @@ class MqttService(object):
     def _on_connect(self, client, userdata, flags, rc):
         client.subscribe("$SYS/broker/clients/total")
 
-    def _on_message(self, client, userdata, msg):
-        if msg.topic == '$SYS/broker/clients/total':
-            self._client_connected_count = int(msg.payload.decode('utf-8'))
+    def _on_message(self, client, userdata, message):
+        payload_string = message.payload.decode('utf-8')
+        if message.topic == '$SYS/broker/clients/total':
+            self._client_connected_count = int(payload_string)
+        elif message.topic in self._messages:
+            self._messages[message.topic] = payload_string

@@ -19,6 +19,7 @@ import ci_screen.service.mqtt_service as mqtt_service
 def exit_on_ctrl_c():
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+
 def main():
     exit_on_ctrl_c()
 
@@ -42,7 +43,6 @@ def main():
     mqtt.start()
 
     sys.exit(app.exec_())
-
 
 
 if __name__ == '__main__':

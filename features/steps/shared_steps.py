@@ -27,3 +27,7 @@ def the_app_is_running_at(context, time):
 @then(u'I see "(?P<text>[^"]*)"')
 def i_see(context, text):
     pqaut.assert_is_visible(text, timeout=10)
+
+@when(u'I close the app')
+def i_close_the_app(context):
+    helpers.kill_ci_screen(context)

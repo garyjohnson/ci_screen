@@ -30,3 +30,28 @@ Feature: MQTT
       | song       | artist          | album art                               |
       | These Days | The Black Keys  | http://lorempixel.com/500/500/abstract/ |
     
+  Scenario: Publishes online status when running
+    Given I have MQTT enabled
+    And I have a CI server with projects:
+      | name              | status    |
+      | My Project        | Success   |
+    And online topic is set to "/testing/online"
+    And the app is running
+    Then I get a message:
+      | topic             | message   |
+      | /testing/online   | 1         |
+
+  Scenario: Publishes offline status when not running
+    Given I have MQTT enabled
+    And I have a CI server with projects:
+      | name              | status    |
+      | My Project        | Success   |
+    And online topic is set to "/testing/online"
+    And the app is running
+    And I get a message:
+      | topic             | message   |
+      | /testing/online   | 1         |
+    When I close the app
+    Then I get a message:
+      | topic             | message   |
+      | /testing/online   | 0         |

@@ -32,6 +32,8 @@ class MqttService(object):
         self._client.on_disconnect = self._on_disconnect
         self._client.on_message = self._on_message
         self._client.username_pw_set(self._settings['username'], self._settings['password'])
+        if self._online_topic:
+            self._client.will_set(self._online_topic, '0', retain=True)
         self._client.connect_async(self._settings['host'], self._settings['port'])
         self._client.loop_start()
 
@@ -39,11 +41,19 @@ class MqttService(object):
     def _now_playing_topic(self):
         return self._settings['now_playing_topic']
 
+    @property
+    def _online_topic(self):
+        return self._settings['online_topic']
+
     def _on_disconnect(self, client, userdata, return_code):
         logger.info('disconnected from mqtt broker: {}'.format(mqtt.error_string(return_code)))
 
     def _on_connect(self, client, userdata, flags, return_code):
         logger.info('connected to mqtt broker: {}'.format(mqtt.connack_string(return_code)))
+
+        if self._online_topic:
+            logger.info('publishing to "{}"'.format(self._online_topic))
+            self._client.publish(self._online_topic, '1', retain=True)
 
         if self._now_playing_topic:
             logger.info('subscribing to "{}"'.format(self._now_playing_topic))
@@ -75,6 +85,7 @@ class MqttService(object):
             settings['username'] = mqtt.get('username', '')
             settings['password'] = mqtt.get('password', '')
             settings['now_playing_topic'] = mqtt.get('now_playing_topic', '')
+            settings['online_topic'] = mqtt.get('online_topic', '')
 
         return settings
 
@@ -85,4 +96,5 @@ class MqttService(object):
                 'port': 0,
                 'username': '',
                 'password': '',
-                'now_playing_topic': '' }
+                'now_playing_topic': '',
+                'online_topic': '' }

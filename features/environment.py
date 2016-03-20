@@ -23,6 +23,7 @@ def before_scenario(context, scenario):
     context.holiday = False
     context.mqtt_enabled = False
     context.mqtt_now_playing_topic = ''
+    context.mqtt_online_topic = ''
     helpers.rebuild_config_file(context)
 
 def after_scenario(context, scenario):

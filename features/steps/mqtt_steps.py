@@ -58,3 +58,19 @@ def see_now_playing_info(context):
         pqaut.assert_is_visible(row['song'], 'song')
         pqaut.assert_is_visible(row['artist'], 'artist')
         pqaut.assert_is_visible(row['album art'], 'albumArt')
+
+@given(u'online topic is set to "(?P<topic>[^"]*)"')
+def online_topic_is_set_to(context, topic):
+    context.mqtt_online_topic = topic
+    helpers.rebuild_config_file(context)
+
+@step(u'I get a message')
+def get_a_message(context):
+    row = context.table[0]
+    topic = row['topic']
+    message = row['message']
+    mqtt = context.mqtt_service
+
+    mqtt.subscribe(topic)
+    if not eventually(lambda: mqtt.get_message(topic) == message):
+        raise Exception('Expected to get a message "{}" for topic "{}"'.format(message, topic))

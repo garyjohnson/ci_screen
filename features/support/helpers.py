@@ -76,7 +76,8 @@ def rebuild_config_file(context):
                 'mqtt': {
                     'host':'0.0.0.0',
                     'port':'52129',
-                    'now_playing_topic':str(context.mqtt_now_playing_topic)
+                    'now_playing_topic':str(context.mqtt_now_playing_topic),
+                    'online_topic':str(context.mqtt_online_topic)
                 }
              }
 
