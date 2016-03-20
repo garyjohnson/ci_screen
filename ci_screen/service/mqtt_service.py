@@ -9,62 +9,80 @@ import paho.mqtt.client as mqtt
 from pydispatch import dispatcher
 
 
+NOW_PLAYING_SIGNAL = "NOW_PLAYING_UPDATE"
 logger = logging.getLogger(__name__)
+
 
 class MqttService(object):
 
     def __init__(self):
-        self._settings = self.get_mqtt_settings()
         self._client = None
+        self._settings = self._get_mqtt_settings()
+
+        logger.info('mqtt settings loaded: {}'.format(self._settings))
 
     def start(self):
-        if self._settings is None:
-            logger.info('MQTT disabled, not connecting')
+        if not self._settings['enabled']:
+            logger.info('mqtt disabled, not connecting')
             return
 
-        logger.info('Connecting to MQTT...')
+        logger.info('connecting to mqtt...')
         self._client = mqtt.Client()
         self._client.on_connect = self._on_connect
         self._client.on_disconnect = self._on_disconnect
         self._client.on_message = self._on_message
         self._client.username_pw_set(self._settings['username'], self._settings['password'])
-        self._client.connect(self._settings['host'], self._settings['port'])
+        self._client.connect_async(self._settings['host'], self._settings['port'])
         self._client.loop_start()
 
-    def _on_disconnect(self, client, userdata, rc):
-        logger.info('disconnected')
-        print(mqtt.error_string(rc))
+    @property
+    def _now_playing_topic(self):
+        return self._settings['now_playing_topic']
 
-    def _on_connect(self, client, userdata, flags, rc):
-        logger.info('Connected to MQTT')
-        print('subscribing to "{}"'.format(self._settings['now_playing_topic']))
-        self._client.subscribe(self._settings['now_playing_topic'])
-        print('subscribed')
+    def _on_disconnect(self, client, userdata, return_code):
+        logger.info('disconnected from mqtt broker: {}'.format(mqtt.error_string(return_code)))
 
-    def _on_message(self, client, userdata, msg):
-        if msg.topic == self._settings['now_playing_topic']:
-            payload = msg.payload.decode('utf-8')
-            now_playing = json.loads(payload)
-            print(now_playing)
-            dispatcher.send(signal="NOW_PLAYING_UPDATE", sender=self, now_playing=now_playing)
+    def _on_connect(self, client, userdata, flags, return_code):
+        logger.info('connected to mqtt broker: {}'.format(mqtt.connack_string(return_code)))
 
-    def get_mqtt_settings(self):
-        logger.debug('Loading MQTT settings')
+        if self._now_playing_topic:
+            logger.info('subscribing to "{}"'.format(self._now_playing_topic))
+            self._client.subscribe(self._now_playing_topic)
+
+    def _on_message(self, client, userdata, message):
+        payload_string = message.payload.decode('utf-8')
+
+        if message.topic == self._now_playing_topic:
+            self._handle_now_playing_message(payload_string)
+
+    def _handle_now_playing_message(self, message):
+        now_playing = json.loads(message)
+        dispatcher.send(signal=NOW_PLAYING_SIGNAL, sender=self, now_playing=now_playing)
+
+    def _get_mqtt_settings(self):
+        logger.info('loading mqtt settings')
+        settings = self._get_default_mqtt_settings()
+
         config_parser = config.SafeConfigParser(allow_no_value=False)
         with open('ci_screen.cfg') as config_file:
             config_parser.readfp(config_file)
 
-        mqtt_enabled = config_parser.getboolean('general', 'mqtt', fallback=False)
-
-        mqtt_settings = None
-        if mqtt_enabled and 'mqtt' in config_parser.sections():
+        settings['enabled'] = config_parser.getboolean('general', 'mqtt', fallback=False)
+        if settings['enabled'] and 'mqtt' in config_parser.sections():
             mqtt = config_parser['mqtt']
-            mqtt_settings = {
-                    'host': mqtt.get('host', ''),
-                    'port': mqtt.getint('port', 0),
-                    'username': mqtt.get('username', ''),
-                    'password': mqtt.get('password', ''),
-                    'now_playing_topic': mqtt.get('now_playing_topic', ''),
-            }
+            settings['host'] = mqtt.get('host', '')
+            settings['port'] = mqtt.getint('port', 0)
+            settings['username'] = mqtt.get('username', '')
+            settings['password'] = mqtt.get('password', '')
+            settings['now_playing_topic'] = mqtt.get('now_playing_topic', '')
 
-        return mqtt_settings
+        return settings
+
+    def _get_default_mqtt_settings(self):
+        return {
+                'enabled': False,
+                'host': '',
+                'port': 0,
+                'username': '',
+                'password': '',
+                'now_playing_topic': '' }

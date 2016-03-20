@@ -35,12 +35,11 @@ class MqttService(object):
         self._client.publish(topic, message, retain=retain)
 
     def _start_mosquitto(self):
-        print("Starting mosquitto")
         subprocess.call('pkill -f "{}"'.format(BROKER_CMD), shell=True)
         self._mosquitto_process = subprocess.Popen(BROKER_CMD.split())
+        time.sleep(1)
 
     def _connect_to_mosquitto(self):
-        print("Connecting to mosquitto")
         self._client = mqtt.Client()
         self._client.on_connect = self._on_connect
         self._client.on_message = self._on_message
