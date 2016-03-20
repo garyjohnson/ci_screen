@@ -52,10 +52,8 @@ class MqttService(object):
             raise Exception('Expected tests to connect to MQTT broker.')
 
     def _on_connect(self, client, userdata, flags, rc):
-        print("Connected with result code "+str(rc))
         client.subscribe("$SYS/broker/clients/total")
 
     def _on_message(self, client, userdata, msg):
-        print('{}: {}'.format(msg.topic, msg.payload.decode('utf-8')))
         if msg.topic == '$SYS/broker/clients/total':
             self._client_connected_count = int(msg.payload.decode('utf-8'))
