@@ -9,6 +9,10 @@ Item {
     ParticleSystem { id: particles }
 
     ImageParticle {
+        rotation: 0
+        rotationVariation: 360
+        rotationVelocity: 2
+        rotationVelocityVariation: 100
         system: particles
         sprites: Sprite{
             source: "../assets/Cage.png"
@@ -24,13 +28,16 @@ Item {
     }
     Emitter {
         system: particles
-        emitRate: 10
+        emitRate: 0.05
         lifeSpan: 7000
         enabled: true
-        velocity: PointDirection{ y:0; yVariation: 100; x:0; xVariation: 100; }
-        acceleration: PointDirection{ y:30; yVariation: 100; x:30; xVariation: 100; }
-        size: 100
-        sizeVariation: 100
-        anchors.fill: parent
+        velocity: PointDirection{ y:200; yVariation: 100; }
+        acceleration: PointDirection{ y: 4 }
+        size: 200
+        sizeVariation: 20
+        anchors.top: parent.top
+        anchors.bottom: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
     }
 }
