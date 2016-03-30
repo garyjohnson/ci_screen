@@ -55,3 +55,18 @@ Feature: MQTT
     Then I get a message:
       | topic             | message   |
       | /testing/online   | 0         |
+
+  @wip
+  Scenario: Shows image published for duration
+    Given I have MQTT enabled
+    And I have a CI server with projects:
+      | name              | status    |
+      | My Project        | Success   |
+    And marquee topic is set to "/testing/marquee"
+    And the app is running
+    And I publish a message:
+      | topic              | message                                                           |
+      | /testing/marquee   | { "image_url":"http://lorempixel.com/400/200/","duration":5000 } |
+    Then I see "http://lorempixel.com/400/200/"
+    And I wait 2 seconds
+    And I do not see "http://lorempixel.com/400/200/"

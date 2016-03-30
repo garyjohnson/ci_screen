@@ -1,3 +1,4 @@
+import time
 import json
 
 from behave import *
@@ -74,3 +75,18 @@ def get_a_message(context):
     mqtt.subscribe(topic)
     if not eventually(lambda: mqtt.get_message(topic) == message):
         raise Exception('Expected to get a message "{}" for topic "{}"'.format(message, topic))
+
+@given(u'marquee topic is set to "(?P<topic>[^"]*)"')
+def marquee_topic_is_set_to(context, topic):
+    context.mqtt_marquee_topic = topic
+    helpers.rebuild_config_file(context)
+
+@given(u'I publish a message')
+def publish_a_message(context):
+    row = context.table[0]
+    topic = row['topic']
+    message = row['message']
+
+    time.sleep(1)
+    mqtt = context.mqtt_service
+    mqtt.publish(topic, message)

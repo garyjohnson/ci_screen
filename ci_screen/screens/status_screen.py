@@ -20,7 +20,10 @@ class StatusScreen(qt.QQuickItem):
     projects_changed = qt.pyqtSignal()
     failed_projects_changed = qt.pyqtSignal()
     error_changed = qt.pyqtSignal()
+    marquee_visible_changed = qt.pyqtSignal()
+    marquee_image_url_changed = qt.pyqtSignal()
     on_status_updated = qt.pyqtSignal(dict, dict)
+    on_show_marquee = qt.pyqtSignal(int, str)
 
     def __init__(self, *args, **kwargs):
         super(StatusScreen, self).__init__(*args, **kwargs)
@@ -28,16 +31,38 @@ class StatusScreen(qt.QQuickItem):
         self._failed_projects = ProjectsModel()
         self._error = None
         self._holiday_source = None
+        self._marquee_visible = False
+        self._marquee_image_url = ''
 
     def componentComplete(self):
         super(StatusScreen, self).componentComplete()
         self.on_status_updated.connect(self.on_status_update_on_ui_thread)
+        self.on_show_marquee.connect(self.on_show_marquee_on_ui_thread)
         dispatcher.connect(self.on_status_update, "CI_UPDATE", sender=dispatcher.Any)
+        dispatcher.connect(self.on_marquee, "SHOW_MARQUEE", sender=dispatcher.Any)
         self.poller = CIServerPoller()
         self.poller.start_polling_async()
 
     def update_holiday(self):
         self.holidaySource = "../{}".format(holiday_chooser.get_holiday_widget_path())
+
+    @qt.pyqtProperty(bool, notify=marquee_visible_changed)
+    def marquee_visible(self):
+        return self._marquee_visible
+
+    @marquee_visible.setter
+    def marquee_visible(self, value):
+        self._marquee_visible = value
+        self.marquee_visible_changed.emit()
+
+    @qt.pyqtProperty(str, notify=marquee_image_url_changed)
+    def marquee_image_url(self):
+        return self._marquee_image_url
+
+    @marquee_image_url.setter
+    def marquee_image_url(self, value):
+        self._marquee_image_url = value
+        self.marquee_image_url_changed.emit()
 
     @qt.pyqtProperty(ProjectsModel, notify=projects_changed)
     def projects(self):
@@ -92,6 +117,19 @@ class StatusScreen(qt.QQuickItem):
 
     def on_status_update(self, responses, errors):
         self.on_status_updated.emit(responses, errors)
+
+    @qt.pyqtSlot(int, str)
+    def on_show_marquee_on_ui_thread(self, duration, image_url):
+        self.marquee_image_url = image_url
+        self.marquee_visible = True
+        qt.QTimer.singleShot(duration, self._on_marquee_duration_finished)
+
+    @qt.pyqtSlot()
+    def _on_marquee_duration_finished(self):
+        self.marquee_visible = False
+
+    def on_marquee(self, duration, image_url):
+        self.on_show_marquee.emit(duration, image_url)
 
     def _synchronize_projects(self, projects_model, new_projects, bad_ci_servers):
         new_project_names = [p.name for p in new_projects]

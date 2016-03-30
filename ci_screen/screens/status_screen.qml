@@ -137,6 +137,21 @@ StatusScreen {
         source: root.holidaySource
     }
 
+   Rectangle  {
+        id: marquee
+        anchors.fill: parent
+        visible: root.marquee_visible
+        color: '#DD000000'
+
+        AnimatedImage {
+            property string automation_id: root.marquee_image_url
+            source: root.marquee_image_url
+            anchors.fill: parent
+            anchors.margins: 50
+            fillMode: Image.PreserveAspectFit
+        }
+    }
+
     Component {
         id: projectTemplate
         Project {
