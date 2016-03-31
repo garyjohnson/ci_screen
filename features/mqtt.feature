@@ -56,7 +56,6 @@ Feature: MQTT
       | topic             | message   |
       | /testing/online   | 0         |
 
-  @wip
   Scenario: Shows image published for duration
     Given I have MQTT enabled
     And I have a CI server with projects:
