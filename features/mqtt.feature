@@ -56,16 +56,44 @@ Feature: MQTT
       | topic             | message   |
       | /testing/online   | 0         |
 
-  Scenario: Shows image published for duration
+  Scenario: Shows image published
     Given I have MQTT enabled
     And I have a CI server with projects:
       | name              | status    |
       | My Project        | Success   |
     And marquee topic is set to "/testing/marquee"
     And the app is running
+    When I publish a message:
+      | topic              | message                                                           |
+      | /testing/marquee   | { "image_url":"../../features/assets/1.jpg","duration":5000 } |
+    Then I see "../../features/assets/1.jpg"
+
+  Scenario: Removes marquee after duration
+    Given I have MQTT enabled
+    And I have a CI server with projects:
+      | name              | status    |
+      | My Project        | Success   |
+    And marquee topic is set to "/testing/marquee"
+    And the app is running
+    When I publish a message:
+      | topic              | message                                                           |
+      | /testing/marquee   | { "image_url":"../../features/assets/1.jpg","duration":5000 } |
+    And I see "../../features/assets/1.jpg"
+    And I wait 2 seconds
+    Then I do not see "../../features/assets/1.jpg"
+
+  Scenario: Replaces previous published image
+    Given I have MQTT enabled
+    And I have a CI server with projects:
+      | name              | status    |
+      | My Project        | Success   |
+    And marquee topic is set to "/testing/marquee"
+    And the app is running
+    When I publish a message:
+      | topic              | message                                                           |
+      | /testing/marquee   | { "image_url":"../../features/assets/1.jpg","duration":5000 } |
+    And I wait 1 second
     And I publish a message:
       | topic              | message                                                           |
-      | /testing/marquee   | { "image_url":"http://lorempixel.com/400/200/","duration":5000 } |
-    Then I see "http://lorempixel.com/400/200/"
-    And I wait 2 seconds
-    And I do not see "http://lorempixel.com/400/200/"
+      | /testing/marquee   | { "image_url":"../../features/assets/2.jpg","duration":5000 } |
+    Then I see "../../features/assets/2.jpg"

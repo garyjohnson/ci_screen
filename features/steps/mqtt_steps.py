@@ -81,7 +81,7 @@ def marquee_topic_is_set_to(context, topic):
     context.mqtt_marquee_topic = topic
     helpers.rebuild_config_file(context)
 
-@given(u'I publish a message')
+@when(u'I publish a message')
 def publish_a_message(context):
     row = context.table[0]
     topic = row['topic']

@@ -26,11 +26,11 @@ def the_app_is_running(context):
 def the_app_is_running_at(context, time):
     helpers.launch_ci_screen(context, time)
 
-@then(u'I see "(?P<text>[^"]*)"')
+@step(u'I see "(?P<text>[^"]*)"')
 def i_see(context, text):
     pqaut.assert_is_visible(text, timeout=10)
 
-@then(u'I do not see "(?P<text>[^"]*)"')
+@step(u'I do not see "(?P<text>[^"]*)"')
 def i_do_not_see(context, text):
     pqaut.assert_is_not_visible(text, timeout=10)
 
@@ -38,6 +38,6 @@ def i_do_not_see(context, text):
 def i_close_the_app(context):
     helpers.kill_ci_screen(context)
 
-@then(u'I wait (?P<seconds>[0-9]+) seconds')
+@step(u'I wait (?P<seconds>[0-9]+) seconds?')
 def wait_n_seconds(context, seconds):
     time.sleep(int(seconds))
