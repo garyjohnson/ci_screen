@@ -10,6 +10,7 @@ from PyQt5.Qt import QApplication, qmlRegisterType
 from freezegun import freeze_time
 
 import ci_screen.widgets.now_playing as now_playing
+import ci_screen.widgets.marquee as marquee
 import ci_screen.screens.status_screen as status_screen
 import ci_screen.main_window as main_window
 import ci_screen.model as model
@@ -33,6 +34,7 @@ def main():
 
     qmlRegisterType(status_screen.StatusScreen, 'Screens', 1, 0, 'StatusScreen')
     qmlRegisterType(now_playing.NowPlaying, 'Widgets', 1, 0, 'NowPlaying')
+    qmlRegisterType(marquee.Marquee, 'Widgets', 1, 0, 'Marquee')
     qmlRegisterType(model.project.Project, 'Model', 1, 0, 'Project')
     qmlRegisterType(model.projects_model.ProjectsModel, 'Model', 1, 0, 'ProjectsModel')
 

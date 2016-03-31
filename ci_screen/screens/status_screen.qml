@@ -137,23 +137,8 @@ StatusScreen {
         source: root.holidaySource
     }
 
-   Rectangle  {
-        id: marquee
+    Marquee {
         anchors.fill: parent
-        visible: root.marquee_visible
-        color: '#BB000000'
-
-        AnimatedImage {
-            property string automation_id: root.marquee_image_url
-            source: root.marquee_image_url
-            anchors.fill: parent
-            anchors.margins: 100
-            fillMode: Image.PreserveAspectFit
-            onStatusChanged: {
-                playing = (status == AnimatedImage.Ready);
-                root.onMarqueeStatusChanged(status);
-            }
-        }
     }
 
     Component {
