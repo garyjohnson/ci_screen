@@ -52,6 +52,7 @@ class MqttService(object):
 
     def _on_disconnect(self, client, userdata, return_code):
         logger.info('disconnected from mqtt broker: {}'.format(mqtt.error_string(return_code)))
+        self._client.reconnect()
 
     def _on_connect(self, client, userdata, flags, return_code):
         logger.info('connected to mqtt broker: {}'.format(mqtt.connack_string(return_code)))
@@ -69,12 +70,15 @@ class MqttService(object):
             self._client.subscribe(self._marquee_topic)
 
     def _on_message(self, client, userdata, message):
-        payload_string = message.payload.decode('utf-8')
+        try:
+            payload_string = message.payload.decode('utf-8')
 
-        if message.topic == self._now_playing_topic:
-            self._handle_now_playing_message(payload_string)
-        elif message.topic == self._marquee_topic:
-            self._handle_marquee_message(payload_string)
+            if message.topic == self._now_playing_topic:
+                self._handle_now_playing_message(payload_string)
+            elif message.topic == self._marquee_topic:
+                self._handle_marquee_message(payload_string)
+        except Exception as ex:
+            logger.error('error trying to parse message {}: {}'.format(message, ex))
 
     def _handle_now_playing_message(self, message):
         now_playing = json.loads(message)
