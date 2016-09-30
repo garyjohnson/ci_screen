@@ -1,7 +1,7 @@
 # ci_screen
 Native QT5 app for showing build status from one or multiple Jenkins CI servers. Uses PyQt5 for Python bindings.
 
-Supports unauthenticated and HTTP basic auth using username & token. `cc.xml must be available via these means (some Jenkins plugins allow granular access control to cc.xml).
+Supports unauthenticated and HTTP basic auth using username & token. cc.xml must be available via these means (some Jenkins plugins allow granular access control to cc.xml).
 
 ## Configuration
 Configuration is handled in ci_screen.cfg. 
@@ -23,7 +23,7 @@ When enabled, shows animations on certain days of the year provided that all job
 A comma-seperated list of sections. Each name must match a section in the config file.
 
 #### {ci_server_section}
-A section defined in the sections property of the ci_servers section.
+Configuration for each individual server. Section name must match one listed under ci_servers->sections.
 
 ##### url
 A required url of the Jenkins server (e.g., http://ci.server.com)
